@@ -272,25 +272,25 @@ private fun TaskState.toText(): String = when (this) {
 
 @Composable
 private fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit, modifier: Modifier = Modifier) {
-    LazyRow(
+    Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        items(TaskState.entries.size) {
+        TaskState.entries.forEach {
             CustomButton(
                 modifier = Modifier
                     .border(
                         2.dp,
-                        if (selectedState == TaskState.entries[it]) Color(0xFF1447E6) else Color(0xFFE5E7EB),
+                        if (selectedState == it) Color(0xFF1447E6) else Color(0xFFE5E7EB),
                         RoundedCornerShape(8.dp),
                     )
-                    .background(if (selectedState == TaskState.entries[it]) Color(0xFFEFF6FF) else Color.White)
-                    .semantics { selected = selectedState == TaskState.entries[it] },
-                onClick = { onStateChanged(TaskState.entries[it]) },
+                    .background(if (selectedState == it) Color(0xFFEFF6FF) else Color.White)
+                    .semantics { selected = selectedState == it },
+                onClick = { onStateChanged(it) },
                 content = {
                     Text(
-                        text = TaskState.entries[it].toText(),
-                        color = if (selectedState == TaskState.entries[it]) Color(0xFF1447E6) else Color.Black,
+                        text = it.toText(),
+                        color = if (selectedState == it) Color(0xFF1447E6) else Color.Black,
                         modifier = Modifier.width(200.dp).padding(vertical = 16.dp),
                         textAlign = TextAlign.Center,
                     )
@@ -319,17 +319,17 @@ private fun AuthorSelectField(
     authors: List<String>,
     modifier: Modifier = Modifier,
 ) {
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(authors.size) { author ->
+        authors.forEach {
             CustomButton(
                 modifier = Modifier.width(200.dp)
-                    .border(2.dp, if (selectedAuthor == authors[author]) Color(0xFF615FFF) else Color(0xFFE5E7EB), RoundedCornerShape(8.dp))
-                    .background(if (selectedAuthor == authors[author]) Color(0xFFEEF2FF) else Color.White)
-                    .semantics { selected = selectedAuthor == authors[author] },
-                onClick = { onAuthorSelected(authors[author]) },
+                    .border(2.dp, if (selectedAuthor == it) Color(0xFF615FFF) else Color(0xFFE5E7EB), RoundedCornerShape(8.dp))
+                    .background(if (selectedAuthor == it) Color(0xFFEEF2FF) else Color.White)
+                    .semantics { selected = selectedAuthor == it },
+                onClick = { onAuthorSelected(it) },
                 content = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -341,7 +341,7 @@ private fun AuthorSelectField(
                             contentDescription = "기본 프로필 이미지",
                         )
                         Text(
-                            text = authors[author],
+                            text = it,
                             color = Color(0xFF101828),
                             modifier = Modifier.padding(vertical = 16.dp),
                             textAlign = TextAlign.Center,
