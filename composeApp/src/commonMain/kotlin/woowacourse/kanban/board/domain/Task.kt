@@ -3,7 +3,7 @@ package woowacourse.kanban.board.domain
 data class Task(
     val title: String,
     val content: String = "",
-    val tags: List<Tag> = listOf(),
+    val tags: List<Tag> = emptyList(),
     val taskState: TaskState = TaskState.TO_DO,
     val author: String
 ) {
