@@ -18,12 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
-import woowacourse.kanban.board.ui.taskcard.components.AuthorInputField
+import woowacourse.kanban.board.ui.taskcard.components.AuthorSelectField
 import woowacourse.kanban.board.ui.taskcard.components.ContentInputField
 import woowacourse.kanban.board.ui.taskcard.components.CreateTaskActionButtons
 import woowacourse.kanban.board.ui.taskcard.components.CreateTaskHeader
 import woowacourse.kanban.board.ui.taskcard.components.TagsInputField
-import woowacourse.kanban.board.ui.taskcard.components.TaskStateInputField
+import woowacourse.kanban.board.ui.taskcard.components.TaskStateSelectField
 import woowacourse.kanban.board.ui.taskcard.components.TitleInputField
 
 @Composable
@@ -60,10 +60,10 @@ fun CreateTaskCardModal(authors: List<String>, modifier: Modifier = Modifier) {
                 isTagsError = !Task.isValidTags(splitTags)
             }
         }
-        TaskStateInputField(selectedState) { newTaskState ->
+        TaskStateSelectField(selectedState) { newTaskState ->
             selectedState = newTaskState
         }
-        AuthorInputField(authors, selectedAuthor) { newAuthor ->
+        AuthorSelectField(authors, selectedAuthor) { newAuthor ->
             selectedAuthor = newAuthor
         }
 
