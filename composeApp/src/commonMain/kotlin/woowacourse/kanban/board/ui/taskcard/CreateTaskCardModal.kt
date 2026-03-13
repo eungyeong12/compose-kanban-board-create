@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -133,117 +132,70 @@ private fun CreateTaskHeader() {
 
 @Composable
 private fun TitleInputField(title: String, isTitleError: Boolean, onValueChange: (String) -> Unit) {
+    LabelText("제목 *")
     TextInputField(
-        label = "제목 *",
-        content = {
-            CustomTextField(
-                value = title,
-                onValueChange = onValueChange,
-                placeholder = "태스크 제목을 입력하세요",
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, if (isTitleError) inputFieldError else inputFieldBorder, RoundedCornerShape(8.dp)),
-                trailingIcon = { if (isTitleError) Icon(Icons.Default.Error, tint = inputFieldError, contentDescription = "경고") },
-            )
-        },
-        infoContent = {
-            if (isTitleError) {
-                Text(
-                    modifier = Modifier.padding(start = 16.dp, top = 4.dp),
-                    text = "제목을 입력해주세요.",
-                    fontWeight = FontWeight.W400,
-                    fontSize = 12.sp,
-                    color = inputFieldError,
-                )
-            }
-        },
+        value = title,
+        onValueChange = onValueChange,
+        placeholder = "태스크 제목을 입력하세요",
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth(),
+        borderColor = if (isTitleError) inputFieldError else inputFieldBorder,
+        isError = isTitleError,
+        infoContent = "제목을 입력해주세요.",
+        infoTextColor = inputFieldError
     )
 }
 
 @Composable
 private fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
+    LabelText("설명")
     TextInputField(
-        label = "설명",
-        content = {
-            CustomTextField(
-                value = content,
-                onValueChange = onValueChange,
-                placeholder = "태스크에 대한 자세한 설명을 입력하세요",
-                singleLine = false,
-                modifier = Modifier.heightIn(min = 144.dp),
-            )
-        },
+        value = content,
+        onValueChange = onValueChange,
+        borderColor = textFieldBorder,
+        placeholder = "태스크에 대한 자세한 설명을 입력하세요",
+        singleLine = false,
+        modifier = Modifier.heightIn(min = 144.dp)
     )
 }
 
 @Composable
 private fun TagsInputField(tags: String, isTagsError: Boolean, isTagFormatError: Boolean, onValueChange: (String) -> Unit) {
     val isError = isTagsError || isTagFormatError
+    LabelText("태그")
     TextInputField(
-        label = "태그",
-        content = {
-            CustomTextField(
-                value = tags,
-                onValueChange = onValueChange,
-                placeholder = "태그를 쉼표로 구분하여 입력하세요 (예: 버그, 긴급)",
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(
-                        1.dp,
-                        if (isError) inputFieldError else inputFieldBorder,
-                        RoundedCornerShape(8.dp),
-                    ),
-                trailingIcon = {
-                    if (isError) Icon(
-                        Icons.Default.Error,
-                        tint = inputFieldError,
-                        contentDescription = "경고",
-                    )
-                },
-            )
+        value = tags,
+        onValueChange = onValueChange,
+        placeholder = "태그를 쉼표로 구분하여 입력하세요 (예: 버그, 긴급)",
+        singleLine = true,
+        borderColor = if (isError) inputFieldError else inputFieldBorder,
+        modifier = Modifier.fillMaxWidth(),
+        isError = isError,
+        infoContent =  when {
+            isTagFormatError -> "태그 형식이 올바르지 않습니다."
+            isTagsError -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
+            else -> "5자 이내의 태그를 최대 5개까지 등록할 수 있습니다."
         },
-        infoContent = {
-            Text(
-                modifier = Modifier.padding(start = 16.dp, top = 4.dp),
-                text = when {
-                    isTagFormatError -> "태그 형식이 올바르지 않습니다."
-                    isTagsError -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
-                    else -> "5자 이내의 태그를 최대 5개까지 등록할 수 있습니다."
-                },
-                fontWeight = FontWeight.W400,
-                fontSize = 12.sp,
-                color = if (isError) inputFieldError else infoText,
-            )
-        },
+        infoTextColor = if (isError) inputFieldError else infoText
     )
 }
 
 @Composable
 private fun TaskStateInputField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit) {
-    TextInputField(
-        label = "상태 *",
-        content = {
-            TaskStateSelectField(
-                selectedState = selectedState,
-                onStateChanged = onStateChanged,
-            )
-        },
+    LabelText("상태 *")
+    TaskStateSelectField(
+        selectedState = selectedState,
+        onStateChanged = onStateChanged,
     )
 }
 
 @Composable
 private fun AuthorInputField(authors: List<String>, selectedAuthor: String, onAuthorSelected: (String) -> Unit) {
-    TextInputField(
-        label = "담당자 *",
-        content = {
-            AuthorSelectField(
-                selectedAuthor = selectedAuthor,
-                onAuthorSelected = onAuthorSelected,
-                authors = authors,
-            )
-        },
+    LabelText("담당자 *")
+    AuthorSelectField(
+        selectedAuthor = selectedAuthor,
+        onAuthorSelected = onAuthorSelected,
+        authors = authors,
     )
 }
 
@@ -294,14 +246,8 @@ private fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (Task
     ) {
         TaskState.entries.forEach {
             CustomButton(
-                modifier = Modifier
-                    .border(
-                        2.dp,
-                        if (selectedState == it) taskStateSelected else buttonBorder,
-                        RoundedCornerShape(8.dp),
-                    )
-                    .background(if (selectedState == it) selectedTaskStateBackground else buttonBackground)
-                    .semantics { selected = selectedState == it },
+                borderColor = if (selectedState == it) taskStateSelected else buttonBorder,
+                backgroundColor = if (selectedState == it) selectedTaskStateBackground else buttonBackground,
                 onClick = { onStateChanged(it) },
                 content = {
                     Text(
@@ -311,18 +257,28 @@ private fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (Task
                         textAlign = TextAlign.Center,
                     )
                 },
+                modifier = Modifier.semantics { selected = selectedState == it },
             )
         }
     }
 }
 
 @Composable
-private fun CustomButton(content: @Composable () -> Unit, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun CustomButton(
+    borderColor: Color,
+    backgroundColor: Color,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = modifier.clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null,
-        ) { onClick() },
+        modifier = modifier
+            .border(2.dp, borderColor, RoundedCornerShape(8.dp))
+            .background(backgroundColor)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) { onClick() },
     ) {
         content()
     }
@@ -337,17 +293,18 @@ private fun AuthorSelectField(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         authors.forEach {
             CustomButton(
-                modifier = Modifier.width(200.dp)
-                    .border(2.dp, if (selectedAuthor == it) authorSelected else buttonBorder, RoundedCornerShape(8.dp))
-                    .background(if (selectedAuthor == it) selectedAuthorBackground else buttonBackground)
-                    .semantics { selected = selectedAuthor == it },
+                borderColor = if (selectedAuthor == it) authorSelected else buttonBorder,
+                backgroundColor = if (selectedAuthor == it) selectedAuthorBackground else buttonBackground,
                 onClick = { onAuthorSelected(it) },
                 content = {
                     Row(
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(vertical = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
@@ -359,71 +316,78 @@ private fun AuthorSelectField(
                         Text(
                             text = it,
                             color = authorText,
-                            modifier = Modifier.padding(vertical = 16.dp),
                             textAlign = TextAlign.Center,
                         )
                     }
                 },
+                modifier = Modifier.semantics { selected = selectedAuthor == it },
             )
         }
     }
 }
 
 @Composable
-private fun TextInputField(
-    label: String,
-    content: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
-    infoContent: (@Composable () -> Unit)? = null,
-) {
-    Column(
+private fun LabelText(label: String, modifier: Modifier = Modifier) {
+    Text(
         modifier = modifier,
-    ) {
-        Text(
-            text = label,
-            fontWeight = FontWeight.W500,
-            fontSize = 14.sp,
-            color = inputFieldText,
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        content()
-        infoContent?.invoke()
-    }
+        text = label,
+        fontWeight = FontWeight.W500,
+        fontSize = 14.sp,
+        color = inputFieldText,
+    )
 }
 
 @Composable
-private fun CustomTextField(
+private fun TextInputField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
     singleLine: Boolean,
+    borderColor: Color,
     modifier: Modifier = Modifier,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
+    infoContent: String = "",
+    infoTextColor: Color = infoText
 ) {
-    TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .border(1.dp, textFieldBorder, RoundedCornerShape(8.dp)),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-        ),
-        value = value,
-        onValueChange = onValueChange,
-        placeholder = {
+    Column(modifier = modifier) {
+        TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .border(1.dp, borderColor, RoundedCornerShape(8.dp)),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                disabledContainerColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            ),
+            value = value,
+            onValueChange = onValueChange,
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    color = textFieldPlaceholder,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W400,
+                )
+            },
+            singleLine = singleLine,
+            trailingIcon = { if (isError) Icon(
+                Icons.Default.Error,
+                tint = inputFieldError,
+                contentDescription = "경고"
+            ) },
+        )
+        if (isError) {
             Text(
-                text = placeholder,
-                color = textFieldPlaceholder,
-                fontSize = 16.sp,
+                modifier = Modifier.padding(start = 16.dp, top = 4.dp),
+                text = infoContent,
                 fontWeight = FontWeight.W400,
+                fontSize = 12.sp,
+                color = infoTextColor,
             )
-        },
-        singleLine = singleLine,
-        trailingIcon = trailingIcon,
-    )
+        }
+    }
 }
 
 @Preview(widthDp = 672)
