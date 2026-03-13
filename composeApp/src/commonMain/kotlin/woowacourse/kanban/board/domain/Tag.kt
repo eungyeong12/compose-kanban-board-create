@@ -1,6 +1,6 @@
 package woowacourse.kanban.board.domain
 
-data class Tag(val name: String) {
+data class Tag private constructor(val name: String) {
     companion object {
         fun from(name: String): Tag {
             require(name.isNotBlank()) { "태그 내용이 비어 있습니다" }

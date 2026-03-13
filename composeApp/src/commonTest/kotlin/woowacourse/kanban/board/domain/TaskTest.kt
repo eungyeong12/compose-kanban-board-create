@@ -20,7 +20,7 @@ class TaskTest {
         // then
         assertThat(task.title).isEqualTo(title)
         assertThat(task.content).isEqualTo(content)
-        assertThat(task.tags).isEqualTo(listOf(Tag("tag1"), Tag("tag2")))
+        assertThat(task.tags).isEqualTo(listOf(Tag.from("tag1"), Tag.from("tag2")))
         assertThat(task.author).isEqualTo(author)
     }
 
