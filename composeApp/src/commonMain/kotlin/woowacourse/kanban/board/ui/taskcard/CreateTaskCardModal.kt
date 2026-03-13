@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -45,6 +44,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
+import woowacourse.kanban.board.ui.theme.accountCircle
+import woowacourse.kanban.board.ui.theme.authorSelected
+import woowacourse.kanban.board.ui.theme.authorText
+import woowacourse.kanban.board.ui.theme.buttonBackground
+import woowacourse.kanban.board.ui.theme.buttonBorder
+import woowacourse.kanban.board.ui.theme.createButtonContainer
+import woowacourse.kanban.board.ui.theme.createButtonDisabled
+import woowacourse.kanban.board.ui.theme.infoText
+import woowacourse.kanban.board.ui.theme.inputFieldBorder
+import woowacourse.kanban.board.ui.theme.inputFieldError
+import woowacourse.kanban.board.ui.theme.inputFieldText
+import woowacourse.kanban.board.ui.theme.selectedAuthorBackground
+import woowacourse.kanban.board.ui.theme.selectedTaskStateBackground
+import woowacourse.kanban.board.ui.theme.taskStateSelected
+import woowacourse.kanban.board.ui.theme.taskStateText
+import woowacourse.kanban.board.ui.theme.textFieldBorder
+import woowacourse.kanban.board.ui.theme.textFieldPlaceholder
 
 @Composable
 fun CreateTaskCardModal(authors: List<String>, modifier: Modifier = Modifier) {
@@ -127,8 +143,8 @@ private fun TitleInputField(title: String, isTitleError: Boolean, onValueChange:
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, if (isTitleError) Color(0xFFB3261E) else Color(0xFF79747E), RoundedCornerShape(8.dp)),
-                trailingIcon = { if (isTitleError) Icon(Icons.Default.Error, tint = Color(0xFFB3261E), contentDescription = "경고") },
+                    .border(1.dp, if (isTitleError) inputFieldError else inputFieldBorder, RoundedCornerShape(8.dp)),
+                trailingIcon = { if (isTitleError) Icon(Icons.Default.Error, tint = inputFieldError, contentDescription = "경고") },
             )
         },
         infoContent = {
@@ -138,7 +154,7 @@ private fun TitleInputField(title: String, isTitleError: Boolean, onValueChange:
                     text = "제목을 입력해주세요.",
                     fontWeight = FontWeight.W400,
                     fontSize = 12.sp,
-                    color = Color(0xFFB3261E),
+                    color = inputFieldError,
                 )
             }
         },
@@ -176,13 +192,13 @@ private fun TagsInputField(tags: String, isTagsError: Boolean, isTagFormatError:
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        if (isError) Color(0xFFB3261E) else Color(0xFF79747E),
+                        if (isError) inputFieldError else inputFieldBorder,
                         RoundedCornerShape(8.dp),
                     ),
                 trailingIcon = {
                     if (isError) Icon(
                         Icons.Default.Error,
-                        tint = Color(0xFFB3261E),
+                        tint = inputFieldError,
                         contentDescription = "경고",
                     )
                 },
@@ -198,7 +214,7 @@ private fun TagsInputField(tags: String, isTagsError: Boolean, isTagFormatError:
                 },
                 fontWeight = FontWeight.W400,
                 fontSize = 12.sp,
-                color = if (isError) Color(0xFFB3261E) else Color(0xFF45454F),
+                color = if (isError) inputFieldError else infoText,
             )
         },
     )
@@ -253,9 +269,9 @@ private fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onCreateClick: ()
             enabled = isNewTaskEnabled,
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4F39F6),
+                containerColor = createButtonContainer,
                 contentColor = Color.White,
-                disabledContainerColor = Color(0xFFA7A4BC),
+                disabledContainerColor = createButtonDisabled,
                 disabledContentColor = Color.White,
             ),
         ) {
@@ -281,16 +297,16 @@ private fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (Task
                 modifier = Modifier
                     .border(
                         2.dp,
-                        if (selectedState == it) Color(0xFF1447E6) else Color(0xFFE5E7EB),
+                        if (selectedState == it) taskStateSelected else buttonBorder,
                         RoundedCornerShape(8.dp),
                     )
-                    .background(if (selectedState == it) Color(0xFFEFF6FF) else Color.White)
+                    .background(if (selectedState == it) selectedTaskStateBackground else buttonBackground)
                     .semantics { selected = selectedState == it },
                 onClick = { onStateChanged(it) },
                 content = {
                     Text(
                         text = it.toText(),
-                        color = if (selectedState == it) Color(0xFF1447E6) else Color.Black,
+                        color = if (selectedState == it) taskStateSelected else taskStateText,
                         modifier = Modifier.width(200.dp).padding(vertical = 16.dp),
                         textAlign = TextAlign.Center,
                     )
@@ -326,8 +342,8 @@ private fun AuthorSelectField(
         authors.forEach {
             CustomButton(
                 modifier = Modifier.width(200.dp)
-                    .border(2.dp, if (selectedAuthor == it) Color(0xFF615FFF) else Color(0xFFE5E7EB), RoundedCornerShape(8.dp))
-                    .background(if (selectedAuthor == it) Color(0xFFEEF2FF) else Color.White)
+                    .border(2.dp, if (selectedAuthor == it) authorSelected else buttonBorder, RoundedCornerShape(8.dp))
+                    .background(if (selectedAuthor == it) selectedAuthorBackground else buttonBackground)
                     .semantics { selected = selectedAuthor == it },
                 onClick = { onAuthorSelected(it) },
                 content = {
@@ -337,12 +353,12 @@ private fun AuthorSelectField(
                         Icon(
                             modifier = Modifier.padding(horizontal = 12.dp),
                             imageVector = Icons.Default.AccountCircle,
-                            tint = Color(0xFF838383),
+                            tint = accountCircle,
                             contentDescription = "기본 프로필 이미지",
                         )
                         Text(
                             text = it,
-                            color = Color(0xFF101828),
+                            color = authorText,
                             modifier = Modifier.padding(vertical = 16.dp),
                             textAlign = TextAlign.Center,
                         )
@@ -367,7 +383,7 @@ private fun TextInputField(
             text = label,
             fontWeight = FontWeight.W500,
             fontSize = 14.sp,
-            color = Color(0xFF364153),
+            color = inputFieldText,
         )
         Spacer(modifier = Modifier.height(10.dp))
         content()
@@ -387,7 +403,7 @@ private fun CustomTextField(
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .border(1.dp, Color(0xFF79747E), RoundedCornerShape(8.dp)),
+            .border(1.dp, textFieldBorder, RoundedCornerShape(8.dp)),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
@@ -400,7 +416,7 @@ private fun CustomTextField(
         placeholder = {
             Text(
                 text = placeholder,
-                color = Color(0xFFAAAAAA),
+                color = textFieldPlaceholder,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.W400,
             )
@@ -410,9 +426,7 @@ private fun CustomTextField(
     )
 }
 
-@Preview(
-    widthDp = 672,
-)
+@Preview(widthDp = 672)
 @Composable
 private fun PreviewCreateTaskCardModal() {
     CreateTaskCardModal(
