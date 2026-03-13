@@ -53,7 +53,7 @@ fun TextExample() {
         text = "Jetpack Compose Text 실습",
         color = Color.Blue,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     )
 }
 
@@ -61,7 +61,7 @@ fun TextExample() {
 fun ImageExample() {
     Image(
         painter = painterResource(Res.drawable.woowa),
-        contentDescription = "우아한테크코스"
+        contentDescription = "우아한테크코스",
     )
 }
 
@@ -106,7 +106,7 @@ fun RowExample() {
 fun FavoriteButton() {
     Button(
         onClick = {},
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Default.Favorite, contentDescription = "Favorite", tint = Color.Black)
@@ -118,20 +118,20 @@ fun FavoriteButton() {
 @Composable
 fun SimpleBox() {
     Box(
-        modifier = Modifier.size(120.dp)
+        modifier = Modifier.size(120.dp),
     ) {
         Box(
             modifier = Modifier
                 .size(100.dp)
                 .background(Color.Blue)
-                .align(Alignment.TopStart)
+                .align(Alignment.TopStart),
         )
 
         Box(
             modifier = Modifier
                 .size(100.dp)
                 .background(Color.Green)
-                .align(Alignment.BottomEnd)
+                .align(Alignment.BottomEnd),
         )
     }
 }
@@ -139,23 +139,27 @@ fun SimpleBox() {
 @Composable
 fun SimpleBox2() {
     Box(
-        modifier = Modifier.size(200.dp)
+        modifier = Modifier.size(200.dp),
     ) {
-        Box(modifier = Modifier
-            .size(50.dp)
-            .background(Color.Red)
-            .align(Alignment.TopStart)
+        Box(
+            modifier = Modifier
+                .size(50.dp)
+                .background(Color.Red)
+                .align(Alignment.TopStart),
         )
 
-        Box(modifier = Modifier
-            .size(50.dp)
-            .background(Color.Yellow)
-            .align(Alignment.Center)
+        Box(
+            modifier = Modifier
+                .size(50.dp)
+                .background(Color.Yellow)
+                .align(Alignment.Center),
         )
 
-        Box(modifier = Modifier
-            .size(50.dp)
-            .background(Color.Green)
-            .align(Alignment.BottomEnd))
+        Box(
+            modifier = Modifier
+                .size(50.dp)
+                .background(Color.Green)
+                .align(Alignment.BottomEnd),
+        )
     }
 }

@@ -69,7 +69,7 @@ dependencies {
 ktlint {
     filter {
         exclude { element ->
-            val path = element.file.path
+            val path = element.file.path.replace("\\", "/")
             path.contains("/build/") ||
                 (!path.contains("/src/commonMain/") && !path.contains("/src/commonTest/"))
         }
