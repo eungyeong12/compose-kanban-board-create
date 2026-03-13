@@ -37,18 +37,18 @@ import woowacourse.kanban.board.ui.theme.taskStateSelected
 import woowacourse.kanban.board.ui.theme.taskStateText
 
 @Composable
-fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit) {
+fun TaskStateInputField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit) {
     LabelText("상태 *")
-    TaskStateContent(
+    TaskStateSelectField(
         selectedState = selectedState,
         onStateChanged = onStateChanged,
     )
 }
 
 @Composable
-fun AuthorSelectField(authors: List<String>, selectedAuthor: String, onAuthorSelected: (String) -> Unit) {
+fun AuthorInputField(authors: List<String>, selectedAuthor: String, onAuthorSelected: (String) -> Unit) {
     LabelText("담당자 *")
-    AuthorsContent(
+    AuthorSelectField(
         selectedAuthor = selectedAuthor,
         onAuthorSelected = onAuthorSelected,
         authors = authors,
@@ -56,7 +56,7 @@ fun AuthorSelectField(authors: List<String>, selectedAuthor: String, onAuthorSel
 }
 
 @Composable
-private fun TaskStateContent(selectedState: TaskState, onStateChanged: (TaskState) -> Unit, modifier: Modifier = Modifier) {
+private fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -81,7 +81,7 @@ private fun TaskStateContent(selectedState: TaskState, onStateChanged: (TaskStat
 }
 
 @Composable
-private fun AuthorsContent(
+private fun AuthorSelectField(
     selectedAuthor: String,
     onAuthorSelected: (String) -> Unit,
     authors: List<String>,
