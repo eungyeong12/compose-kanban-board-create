@@ -110,7 +110,7 @@ private fun CreateTaskHeader() {
         )
         Icon(
             imageVector = Icons.Default.Close,
-            contentDescription = null,
+            contentDescription = "닫기",
         )
     }
 }
