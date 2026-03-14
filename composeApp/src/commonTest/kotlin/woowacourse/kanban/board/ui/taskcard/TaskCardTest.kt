@@ -4,7 +4,6 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
 import org.junit.Test
-import woowacourse.kanban.board.domain.Tag
 import woowacourse.kanban.board.domain.Task
 
 @OptIn(ExperimentalTestApi::class)

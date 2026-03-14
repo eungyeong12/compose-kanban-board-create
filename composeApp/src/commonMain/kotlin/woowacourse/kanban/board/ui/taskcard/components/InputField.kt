@@ -36,7 +36,7 @@ fun TitleInputField(title: String, isTitleError: Boolean, onValueChange: (String
         borderColor = if (isTitleError) inputFieldError else inputFieldBorder,
         isError = isTitleError,
         infoContent = "제목을 입력해주세요.",
-        infoTextColor = inputFieldError
+        infoTextColor = inputFieldError,
     )
 }
 
@@ -49,7 +49,7 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
         borderColor = textFieldBorder,
         placeholder = "태스크에 대한 자세한 설명을 입력하세요",
         singleLine = false,
-        modifier = Modifier.heightIn(min = 144.dp)
+        modifier = Modifier.heightIn(min = 144.dp),
     )
 }
 
@@ -65,12 +65,12 @@ fun TagsInputField(tags: String, isTagsError: Boolean, isTagFormatError: Boolean
         borderColor = if (isError) inputFieldError else inputFieldBorder,
         modifier = Modifier.fillMaxWidth(),
         isError = isError,
-        infoContent =  when {
+        infoContent = when {
             isTagFormatError -> "태그 형식이 올바르지 않습니다."
             isTagsError -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
             else -> "5자 이내의 태그를 최대 5개까지 등록할 수 있습니다."
         },
-        infoTextColor = if (isError) inputFieldError else infoText
+        infoTextColor = if (isError) inputFieldError else infoText,
     )
 }
 
@@ -84,7 +84,7 @@ private fun TextInputField(
     modifier: Modifier = Modifier,
     isError: Boolean = false,
     infoContent: String = "",
-    infoTextColor: Color = infoText
+    infoTextColor: Color = infoText,
 ) {
     Column(modifier = modifier) {
         TextField(
@@ -109,11 +109,13 @@ private fun TextInputField(
                 )
             },
             singleLine = singleLine,
-            trailingIcon = { if (isError) Icon(
-                Icons.Default.Error,
-                tint = inputFieldError,
-                contentDescription = "경고"
-            ) },
+            trailingIcon = {
+                if (isError) Icon(
+                    Icons.Default.Error,
+                    tint = inputFieldError,
+                    contentDescription = "경고",
+                )
+            },
         )
         if (isError) {
             Text(
