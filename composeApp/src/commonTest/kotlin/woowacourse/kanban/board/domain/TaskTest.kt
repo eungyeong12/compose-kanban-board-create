@@ -7,43 +7,50 @@ import org.junit.Test
 class TaskTest {
 
     @Test
-    fun `태스크 생성 성공 테스트`() {
+    fun `제목이 비어 있지 않은 경우 유효성 검사 결과로 true를 리턴한다`() {
         // given
         val title = "title"
-        val content = "content"
-        val tags = listOf("tag1", "tag2")
-        val author = "author"
 
         // when
-        val task = Task.of(title, content, tags, author)
+        val isValid = Task.isValidTitle(title)
 
         // then
-        assertThat(task.title).isEqualTo(title)
-        assertThat(task.content).isEqualTo(content)
-        assertThat(task.tags).isEqualTo(listOf(Tag.from("tag1"), Tag.from("tag2")))
-        assertThat(task.author).isEqualTo(author)
+        assertThat(isValid).isTrue()
     }
 
     @Test
-    fun `제목이 비어 있거나 공백만 있는 경우 생성이 불가능하다`() {
-        assertThatThrownBy { Task.of("", "content", listOf("tag1", "tag2"), "author") }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("제목을 입력해주세요")
+    fun `제목이 비어 있거나 공백만 있는 경우 유효성 검사 결과로 false를 리턴한다`() {
+        // given
+        val title = ""
+
+        // when
+        val isValid = Task.isValidTitle(title)
+
+        // then
+        assertThat(isValid).isFalse()
     }
 
     @Test
-    fun `담당자가 비어 있거나 공백만 있는 경우 생성이 불가능하다`() {
-        assertThatThrownBy { Task.of("title", "content", listOf("tag1", "tag2"), "") }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("작성자를 입력해주세요")
+    fun `태그가 5개를 초과하지 않는 경우 유효성 검사 결과로 true를 리턴한다`() {
+        // given
+        val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5")
+
+        // when
+        val isValid = Task.isValidTags(tags)
+
+        // then
+        assertThat(isValid).isTrue()
     }
 
     @Test
-    fun `태그가 5개 초과인 경우 생성이 불가능하다`() {
+    fun `태그가 5개 초과인 경우 유효성 검사 결과로 false를 리턴한다`() {
+        // given
         val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5", "tag6")
 
-        assertThatThrownBy { Task.of("title", "content", tags, "author") }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("태그는 최대 5개까지 입력할 수 있습니다")
+        // when
+        val isValid = Task.isValidTags(tags)
+
+        // then
+        assertThat(isValid).isFalse()
     }
 }
