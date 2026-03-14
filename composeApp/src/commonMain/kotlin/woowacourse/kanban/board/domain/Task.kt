@@ -7,6 +7,7 @@ data class Task private constructor(
     val taskState: TaskState = TaskState.TO_DO,
     val author: String,
 ) {
+
     companion object {
         fun of(title: String, content: String = "", tagsInput: List<String> = emptyList(), author: String): Task {
             require(isValidTitle(title)) { "제목을 입력해주세요" }
