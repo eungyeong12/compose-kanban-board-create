@@ -1,5 +1,6 @@
 package woowacourse.kanban.board.ui.taskcard
 
+import androidx.compose.ui.test.ComposeUiTest
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -21,11 +22,9 @@ class CreateTaskCardModalTest {
         setContent {
             CreateTaskCardModal(authors = authors)
         }
+        setDummyValue("태스크 제목을 입력하세요", "지워질 제목입니다")
 
-        val typedTitle = "지워질 제목입니다"
-
-        onNodeWithText("태스크 제목을 입력하세요").performTextInput(typedTitle)
-        onNodeWithText(typedTitle).performTextClearance()
+        onNodeWithText("지워질 제목입니다").performTextClearance()
         onNodeWithText("제목을 입력해주세요.").assertExists()
     }
 
@@ -166,5 +165,9 @@ class CreateTaskCardModalTest {
         onNodeWithText("태스크 제목을 입력하세요").performTextInput("제목")
         onNodeWithText("태그를 쉼표로 구분하여 입력하세요 (예: 버그, 긴급)").performTextInput("   \n태그의 \t,  앞뒤공백은   , 무시  , 됩니다  ")
         onNodeWithText("생성").assertIsEnabled()
+    }
+
+    private fun ComposeUiTest.setDummyValue(nodeText: String, value: String) {
+        onNodeWithText(nodeText).performTextInput(value)
     }
 }
