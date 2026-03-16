@@ -93,7 +93,7 @@ private fun TextInputField(
 ) {
     Column(modifier = modifier) {
         TextField(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .border(1.dp, borderColor, RoundedCornerShape(8.dp)),
             colors = TextFieldDefaults.colors(
