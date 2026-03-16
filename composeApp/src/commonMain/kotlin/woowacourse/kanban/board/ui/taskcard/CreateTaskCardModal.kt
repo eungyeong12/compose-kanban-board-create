@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +35,7 @@ fun CreateTaskCardModal(authors: List<String>, modifier: Modifier = Modifier) {
     var isTagFormatError by remember { mutableStateOf(false) }
     var selectedState by remember { mutableStateOf(TaskState.TO_DO) }
     var selectedAuthor by remember { mutableStateOf(authors.first()) }
-    val isNewTaskEnabled by remember { derivedStateOf { !isTitleError && !isTagsError && !isTagFormatError } }
+    val isNewTaskEnabled = !isTitleError && !isTagsError && !isTagFormatError
 
     Column(
         modifier = modifier.fillMaxWidth(),
