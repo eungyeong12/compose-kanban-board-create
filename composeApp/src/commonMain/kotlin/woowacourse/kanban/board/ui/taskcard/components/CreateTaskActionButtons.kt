@@ -12,11 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import woowacourse.kanban.board.ui.theme.cancelButtonContainer
+import woowacourse.kanban.board.ui.theme.cancelButtonContent
 import woowacourse.kanban.board.ui.theme.createButtonContainer
-import woowacourse.kanban.board.ui.theme.createButtonDisabled
+import woowacourse.kanban.board.ui.theme.createButtonContent
+import woowacourse.kanban.board.ui.theme.createButtonDisableContent
+import woowacourse.kanban.board.ui.theme.createButtonDisabledContainer
 
 @Composable
 fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onCreateClick: () -> Unit) {
@@ -28,8 +31,8 @@ fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onCreateClick: () -> Unit
         Button(
             onClick = {},
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color(0xFF364153),
+                containerColor = cancelButtonContainer,
+                contentColor = cancelButtonContent,
             ),
         ) {
             Text(text = "취소", textAlign = TextAlign.Center)
@@ -41,9 +44,9 @@ fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onCreateClick: () -> Unit
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = createButtonContainer,
-                contentColor = Color.White,
-                disabledContainerColor = createButtonDisabled,
-                disabledContentColor = Color.White,
+                contentColor = createButtonContent,
+                disabledContainerColor = createButtonDisabledContainer,
+                disabledContentColor = createButtonDisableContent,
             ),
         ) {
             Text(text = "생성", textAlign = TextAlign.Center)

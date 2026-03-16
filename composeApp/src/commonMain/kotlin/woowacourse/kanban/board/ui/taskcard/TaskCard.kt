@@ -29,6 +29,12 @@ import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
+import woowacourse.kanban.board.ui.theme.profileText
+import woowacourse.kanban.board.ui.theme.tagBackground
+import woowacourse.kanban.board.ui.theme.tagText
+import woowacourse.kanban.board.ui.theme.taskCardBorder
+import woowacourse.kanban.board.ui.theme.taskCardContent
+import woowacourse.kanban.board.ui.theme.taskCardTitle
 
 @Composable
 fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(), author: String) {
@@ -36,7 +42,7 @@ fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(),
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
         ),
-        border = BorderStroke(1.dp, Color(0xFFE5E7EB)),
+        border = BorderStroke(1.dp, taskCardBorder),
         modifier = Modifier.width(286.dp),
     ) {
         Column(
@@ -46,7 +52,7 @@ fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(),
             Title(title = title)
             if (content.isNotEmpty()) Content(content = content)
             if (tags.isNotEmpty()) Tags(tags = tags)
-            HorizontalDivider(color = Color(0xFFE5E7EB))
+            HorizontalDivider(color = taskCardBorder)
             Profile(author = author)
         }
     }
@@ -57,7 +63,7 @@ fun Title(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium,
-        color = Color(0xFF101828),
+        color = taskCardTitle,
         fontSize = 16.sp,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
@@ -69,7 +75,7 @@ fun Content(content: String) {
     Text(
         text = content,
         style = MaterialTheme.typography.bodyMedium,
-        color = Color(0xFF4A5565),
+        color = taskCardContent,
         fontSize = 14.sp,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
@@ -86,13 +92,13 @@ fun Tags(tags: List<String>) {
             Box(
                 modifier = Modifier
                     .height(24.dp)
-                    .background(Color(0xFFF3F4F6), MaterialTheme.shapes.large)
+                    .background(tagBackground, MaterialTheme.shapes.large)
                     .padding(horizontal = 8.dp),
             ) {
                 Text(
                     text = tag,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF364153),
+                    color = tagText,
                     fontSize = 12.sp,
                     modifier = Modifier.align(Alignment.Center),
                 )
@@ -113,7 +119,7 @@ fun Profile(author: String) {
         Text(
             text = author,
             style = MaterialTheme.typography.bodyMedium,
-            color = Color(0xFF364153),
+            color = profileText,
             fontSize = 14.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

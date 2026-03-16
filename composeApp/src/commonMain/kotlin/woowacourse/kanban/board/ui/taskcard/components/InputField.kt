@@ -22,7 +22,12 @@ import woowacourse.kanban.board.ui.theme.infoText
 import woowacourse.kanban.board.ui.theme.inputFieldBorder
 import woowacourse.kanban.board.ui.theme.inputFieldError
 import woowacourse.kanban.board.ui.theme.textFieldBorder
+import woowacourse.kanban.board.ui.theme.textFieldDisabledContainer
+import woowacourse.kanban.board.ui.theme.textFieldFocusedContainer
+import woowacourse.kanban.board.ui.theme.textFieldFocusedIndicator
 import woowacourse.kanban.board.ui.theme.textFieldPlaceholder
+import woowacourse.kanban.board.ui.theme.textFieldUnfocusedContainer
+import woowacourse.kanban.board.ui.theme.textFieldUnfocusedIndicator
 
 @Composable
 fun TitleInputField(title: String, isTitleError: Boolean, onValueChange: (String) -> Unit) {
@@ -92,11 +97,11 @@ private fun TextInputField(
                 .fillMaxWidth()
                 .border(1.dp, borderColor, RoundedCornerShape(8.dp)),
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
+                focusedContainerColor = textFieldFocusedContainer,
+                unfocusedContainerColor = textFieldUnfocusedContainer,
+                disabledContainerColor = textFieldDisabledContainer,
+                focusedIndicatorColor = textFieldFocusedIndicator,
+                unfocusedIndicatorColor = textFieldUnfocusedIndicator,
             ),
             value = value,
             onValueChange = onValueChange,
