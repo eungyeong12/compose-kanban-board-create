@@ -59,7 +59,7 @@ fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(),
 }
 
 @Composable
-fun Title(title: String) {
+private fun Title(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium,
@@ -71,7 +71,7 @@ fun Title(title: String) {
 }
 
 @Composable
-fun Content(content: String) {
+private fun Content(content: String) {
     Text(
         text = content,
         style = MaterialTheme.typography.bodyMedium,
@@ -83,7 +83,7 @@ fun Content(content: String) {
 }
 
 @Composable
-fun Tags(tags: List<String>) {
+private fun Tags(tags: List<String>) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -108,7 +108,7 @@ fun Tags(tags: List<String>) {
 }
 
 @Composable
-fun Profile(author: String) {
+private fun Profile(author: String) {
     Row {
         Image(
             painter = painterResource(Res.drawable.profile_image),
