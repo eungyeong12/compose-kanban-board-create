@@ -24,24 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
-import woowacourse.kanban.board.data.tasksData
-import woowacourse.kanban.board.domain.Tag
-import woowacourse.kanban.board.domain.Task
-
-private class TaskCardPreviewParameterProvider : PreviewParameterProvider<Task> {
-    override val values = tasksData.asSequence()
-}
 
 @Composable
-@Preview(showBackground = true)
-fun TaskCard(@PreviewParameter(TaskCardPreviewParameterProvider::class) task: Task) {
+fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(), author: String) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -53,11 +43,11 @@ fun TaskCard(@PreviewParameter(TaskCardPreviewParameterProvider::class) task: Ta
             modifier = Modifier.padding(17.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Title(title = task.title)
-            if (task.content.isNotEmpty()) Content(content = task.content)
-            if (task.tags.isNotEmpty()) Tags(tags = task.tags)
+            Title(title = title)
+            if (content.isNotEmpty()) Content(content = content)
+            if (tags.isNotEmpty()) Tags(tags = tags)
             HorizontalDivider(color = Color(0xFFE5E7EB))
-            Profile(author = task.author)
+            Profile(author = author)
         }
     }
 }
@@ -87,7 +77,7 @@ fun Content(content: String) {
 }
 
 @Composable
-fun Tags(tags: List<Tag>) {
+fun Tags(tags: List<String>) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -100,7 +90,7 @@ fun Tags(tags: List<Tag>) {
                     .padding(horizontal = 8.dp),
             ) {
                 Text(
-                    text = tag.name,
+                    text = tag,
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFF364153),
                     fontSize = 12.sp,
@@ -129,4 +119,15 @@ fun Profile(author: String) {
             overflow = TextOverflow.Ellipsis,
         )
     }
+}
+
+@Preview
+@Composable
+private fun TaskCardPreview() {
+    TaskCard(
+        title = "LazyColumn 컴포넌트 구현",
+        content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
+        tags = listOf("컴포넌트", "성능"),
+        author = "다이노"
+    )
 }
