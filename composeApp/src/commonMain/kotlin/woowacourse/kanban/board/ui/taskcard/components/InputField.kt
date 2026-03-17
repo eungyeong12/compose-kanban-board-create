@@ -94,9 +94,9 @@ private fun TextInputField(
     infoContent: String = "",
     infoTextColor: Color = infoText,
 ) {
-    Column(modifier = modifier) {
+    Column {
         TextField(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .border(1.dp, borderColor, RoundedCornerShape(8.dp)),
             colors = TextFieldDefaults.colors(
