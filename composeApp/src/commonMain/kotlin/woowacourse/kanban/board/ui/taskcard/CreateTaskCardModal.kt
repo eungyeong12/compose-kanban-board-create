@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.Title
 import woowacourse.kanban.board.exception.TagError
-import woowacourse.kanban.board.exception.TitleError
 import woowacourse.kanban.board.ui.taskcard.components.AuthorSelectField
 import woowacourse.kanban.board.ui.taskcard.components.ContentInputField
 import woowacourse.kanban.board.ui.taskcard.components.CreateTaskActionButtons
@@ -29,12 +26,7 @@ import woowacourse.kanban.board.ui.taskcard.components.TitleInputField
 import woowacourse.kanban.board.ui.taskcard.state.State
 
 @Composable
-fun CreateTaskCardModal(
-    state: State,
-    onStateChange: (State) -> Unit,
-    authors: List<String>,
-    modifier: Modifier = Modifier
-) {
+fun CreateTaskCardModal(state: State, onStateChange: (State) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),

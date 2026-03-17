@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.test.ComposeUiTest
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -15,8 +14,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.runComposeUiTest
-import woowacourse.kanban.board.ui.taskcard.state.State
 import kotlin.test.Test
+import woowacourse.kanban.board.ui.taskcard.state.State
 
 @OptIn(ExperimentalTestApi::class)
 class CreateTaskCardModalTest {
@@ -29,7 +28,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("지워질 제목입니다").performTextClearance()
@@ -43,7 +42,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
 
@@ -61,7 +60,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -79,7 +78,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -97,7 +96,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -115,7 +114,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -133,7 +132,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -151,7 +150,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
 
@@ -166,7 +165,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("To Do").performClick()
@@ -186,7 +185,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
 
@@ -200,7 +199,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
 
@@ -219,7 +218,7 @@ class CreateTaskCardModalTest {
             CreateTaskCardModal(
                 state = state,
                 onStateChange = { state = it },
-                authors = authors
+                authors = authors,
             )
         }
         onNodeWithText("생성").performClick() // 초기 화면은 항상 생성 버튼이 활성회되기 때문에 비활성화 처리를 위해 수행
