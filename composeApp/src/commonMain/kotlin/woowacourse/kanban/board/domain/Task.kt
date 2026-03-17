@@ -1,5 +1,7 @@
 package woowacourse.kanban.board.domain
 
+import woowacourse.kanban.board.exception.TagError
+
 class Task private constructor(
     val title: String,
     val content: String = "",
@@ -9,10 +11,13 @@ class Task private constructor(
 ) {
 
     companion object {
-        fun isValidTitle(value: String): Boolean = value.isNotBlank()
-
-        fun isValidTags(tags: List<String>): Boolean = tags.all { Tag.isValid(it) } && isValidTagCount(tags)
-
-        private fun isValidTagCount(tags: List<String>): Boolean = tags.size <= 5
+        fun isValidTags(tags: List<String>): TagError {
+            tags.forEach {
+                val result = Tag.isValid(it)
+                if (result != TagError.NONE) return result
+            }
+            if (tags.size > 5) return TagError.TooMany
+            return TagError.NONE
+        }
     }
 }

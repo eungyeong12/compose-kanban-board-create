@@ -17,6 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
+import woowacourse.kanban.board.domain.Title
+import woowacourse.kanban.board.exception.TagError
+import woowacourse.kanban.board.exception.TitleError
 import woowacourse.kanban.board.ui.taskcard.components.AuthorSelectField
 import woowacourse.kanban.board.ui.taskcard.components.ContentInputField
 import woowacourse.kanban.board.ui.taskcard.components.CreateTaskActionButtons
@@ -28,14 +31,13 @@ import woowacourse.kanban.board.ui.taskcard.components.TitleInputField
 @Composable
 fun CreateTaskCardModal(authors: List<String>, modifier: Modifier = Modifier) {
     var title by remember { mutableStateOf("") }
-    var isTitleError by remember { mutableStateOf(false) }
+    var titleError by remember { mutableStateOf(TitleError.NONE) }
     var content by remember { mutableStateOf("") }
     var tags by remember { mutableStateOf("") }
-    var isTagsError by remember { mutableStateOf(false) }
-    var isTagFormatError by remember { mutableStateOf(false) }
+    var tagError by remember { mutableStateOf(TagError.NONE) }
     var selectedState by remember { mutableStateOf(TaskState.TO_DO) }
     var selectedAuthor by remember { mutableStateOf(authors.first()) }
-    val isNewTaskEnabled = !isTitleError && !isTagsError && !isTagFormatError
+    val isNewTaskEnabled = titleError == TitleError.NONE && tagError == TagError.NONE
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -43,20 +45,21 @@ fun CreateTaskCardModal(authors: List<String>, modifier: Modifier = Modifier) {
     ) {
         CreateTaskHeader()
         HorizontalDivider()
-        TitleInputField(title, isTitleError) {
+        TitleInputField(title, titleError) {
             title = it
-            isTitleError = !Task.isValidTitle(it)
+            titleError = Title.isValid(it)
         }
         ContentInputField(content) { content = it }
-        TagsInputField(tags, isTagsError, isTagFormatError) {
+        TagsInputField(tags, tagError) {
             tags = it
             val splitTags = tags.split(",").map { tag -> tag.trim() }
             if (tags.isEmpty()) {
-                isTagFormatError = false
-                isTagsError = false
+                tagError = TagError.NONE
             } else {
-                isTagFormatError = splitTags.any { tag -> tag.isEmpty() }
-                isTagsError = !Task.isValidTags(splitTags)
+                splitTags.forEach { tag ->
+                    if (tag.isEmpty()) tagError = TagError.InValidFormat
+                }
+                tagError = Task.isValidTags(splitTags)
             }
         }
         TaskStateSelectField(selectedState) { newTaskState ->
@@ -69,7 +72,7 @@ fun CreateTaskCardModal(authors: List<String>, modifier: Modifier = Modifier) {
         HorizontalDivider()
 
         CreateTaskActionButtons(isNewTaskEnabled) {
-            isTitleError = !Task.isValidTitle(title)
+            titleError = Title.isValid(title)
         }
     }
 }

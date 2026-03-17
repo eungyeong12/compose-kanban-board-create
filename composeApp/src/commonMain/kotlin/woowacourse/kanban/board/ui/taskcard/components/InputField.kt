@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.kanban.board.exception.TagError
+import woowacourse.kanban.board.exception.TitleError
 import woowacourse.kanban.board.ui.theme.infoText
 import woowacourse.kanban.board.ui.theme.inputFieldBorder
 import woowacourse.kanban.board.ui.theme.inputFieldError
@@ -30,7 +32,8 @@ import woowacourse.kanban.board.ui.theme.textFieldUnfocusedContainer
 import woowacourse.kanban.board.ui.theme.textFieldUnfocusedIndicator
 
 @Composable
-fun TitleInputField(title: String, isTitleError: Boolean, onValueChange: (String) -> Unit) {
+fun TitleInputField(title: String, titleError: TitleError, onValueChange: (String) -> Unit) {
+    val isError = titleError != TitleError.NONE
     LabelText("제목 *")
     TextInputField(
         value = title,
@@ -38,9 +41,9 @@ fun TitleInputField(title: String, isTitleError: Boolean, onValueChange: (String
         placeholder = "태스크 제목을 입력하세요",
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
-        borderColor = if (isTitleError) inputFieldError else inputFieldBorder,
-        isError = isTitleError,
-        infoContent = "제목을 입력해주세요.",
+        borderColor = if (isError) inputFieldError else inputFieldBorder,
+        isError = isError,
+        infoContent = if (titleError == TitleError.Blank) "제목을 입력해주세요." else "",
         infoTextColor = inputFieldError,
     )
 }
@@ -59,8 +62,8 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun TagsInputField(tags: String, isTagsError: Boolean, isTagFormatError: Boolean, onValueChange: (String) -> Unit) {
-    val isError = isTagsError || isTagFormatError
+fun TagsInputField(tags: String, tagError: TagError, onValueChange: (String) -> Unit) {
+    val isError = tagError != TagError.NONE
     LabelText("태그")
     TextInputField(
         value = tags,
@@ -70,10 +73,10 @@ fun TagsInputField(tags: String, isTagsError: Boolean, isTagFormatError: Boolean
         borderColor = if (isError) inputFieldError else inputFieldBorder,
         modifier = Modifier.fillMaxWidth(),
         isError = isError,
-        infoContent = when {
-            isTagFormatError -> "태그 형식이 올바르지 않습니다."
-            isTagsError -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
-            else -> "5자 이내의 태그를 최대 5개까지 등록할 수 있습니다."
+        infoContent = when (tagError) {
+            TagError.InValidFormat -> "태그 형식이 올바르지 않습니다."
+            TagError.TooLong, TagError.TooMany -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
+            TagError.NONE -> "5자 이내의 태그를 최대 5개까지 등록할 수 있습니다."
         },
         infoTextColor = if (isError) inputFieldError else infoText,
     )
