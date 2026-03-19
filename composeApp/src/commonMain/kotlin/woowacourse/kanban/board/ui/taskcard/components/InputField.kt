@@ -43,7 +43,7 @@ fun TitleInputField(title: String, titleError: TitleError, onValueChange: (Strin
         modifier = Modifier.fillMaxWidth(),
         borderColor = if (isError) inputFieldError else inputFieldBorder,
         isError = isError,
-        infoContent = if (titleError == TitleError.Blank) "제목을 입력해주세요." else "",
+        infoContent = if (titleError == TitleError.BLANK) "제목을 입력해주세요." else "",
         infoTextColor = inputFieldError,
     )
 }
@@ -74,8 +74,8 @@ fun TagsInputField(tags: String, tagError: TagError, onValueChange: (String) -> 
         modifier = Modifier.fillMaxWidth(),
         isError = isError,
         infoContent = when (tagError) {
-            TagError.InValidFormat -> "태그 형식이 올바르지 않습니다."
-            TagError.TooLong, TagError.TooMany -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
+            TagError.INVALID_FORMAT -> "태그 형식이 올바르지 않습니다."
+            TagError.TOO_LONG, TagError.TOO_MANY -> "태그는 5자 이내로 5개까지만 등록할 수 있습니다."
             TagError.NONE -> "5자 이내의 태그를 최대 5개까지 등록할 수 있습니다."
         },
         infoTextColor = if (isError) inputFieldError else infoText,

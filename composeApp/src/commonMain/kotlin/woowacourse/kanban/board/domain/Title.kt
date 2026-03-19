@@ -6,6 +6,6 @@ import woowacourse.kanban.board.exception.TitleException
 @JvmInline
 value class Title(val value: String) {
     init {
-        if (value.isBlank()) throw TitleException(TitleError.Blank)
+        if (value.isBlank()) throw TitleException(TitleError.BLANK)
     }
 }

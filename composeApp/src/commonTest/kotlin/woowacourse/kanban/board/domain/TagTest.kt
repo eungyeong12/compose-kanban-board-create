@@ -25,7 +25,7 @@ class TagTest {
         assertThatThrownBy { Tag("") }
             .isInstanceOf(TagException::class.java)
             .extracting("error")
-            .isEqualTo(TagError.InValidFormat)
+            .isEqualTo(TagError.INVALID_FORMAT)
     }
 
     @Test
@@ -33,6 +33,6 @@ class TagTest {
         assertThatThrownBy { Tag("123456") }
             .isInstanceOf(TagException::class.java)
             .extracting("error")
-            .isEqualTo(TagError.TooLong)
+            .isEqualTo(TagError.TOO_LONG)
     }
 }

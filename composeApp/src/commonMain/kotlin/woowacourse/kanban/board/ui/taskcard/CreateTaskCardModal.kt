@@ -42,11 +42,10 @@ fun CreateTaskCardModal(state: State, onStateChange: (State) -> Unit, authors: L
         }
         ContentInputField(state.content) { onStateChange(state.copy(content = it)) }
         TagsInputField(state.tags, state.tagError) {
-            val splitTags = it.split(",").map { tag -> tag.trim() }
             if (it.isEmpty()) {
                 onStateChange(state.copy(tags = it, tagError = TagError.NONE))
             } else {
-                onStateChange(state.copy(tags = it, tagError = runCatching { Tags(splitTags) }.fold(
+                onStateChange(state.copy(tags = it, tagError = runCatching { Tags(it) }.fold(
                     onSuccess = { TagError.NONE },
                     onFailure = { e -> if (e is TagException) e.error else TagError.NONE }
                 )))

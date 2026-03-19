@@ -25,6 +25,6 @@ class TitleTest {
         assertThatThrownBy { Title("") }
             .isInstanceOf(TitleException::class.java)
             .extracting("error")
-            .isEqualTo(TitleError.Blank)
+            .isEqualTo(TitleError.BLANK)
     }
 }

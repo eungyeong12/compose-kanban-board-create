@@ -6,7 +6,7 @@ import woowacourse.kanban.board.exception.TagException
 @JvmInline
 value class Tag(val value: String) {
     init {
-        if (value.isBlank()) throw TagException(TagError.InValidFormat)
-        if (value.length > 5) throw TagException(TagError.TooLong)
+        if (value.isBlank()) throw TagException(TagError.INVALID_FORMAT)
+        if (value.length > 5) throw TagException(TagError.TOO_LONG)
     }
 }
