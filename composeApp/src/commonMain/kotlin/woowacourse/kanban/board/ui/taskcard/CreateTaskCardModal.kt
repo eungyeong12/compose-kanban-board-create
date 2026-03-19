@@ -7,15 +7,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.Tags
 import woowacourse.kanban.board.domain.Title
 import woowacourse.kanban.board.exception.TagError
+import woowacourse.kanban.board.exception.TagException
+import woowacourse.kanban.board.exception.TitleError
+import woowacourse.kanban.board.exception.TitleException
 import woowacourse.kanban.board.ui.taskcard.components.AuthorSelectField
 import woowacourse.kanban.board.ui.taskcard.components.ContentInputField
 import woowacourse.kanban.board.ui.taskcard.components.CreateTaskActionButtons
@@ -34,7 +35,10 @@ fun CreateTaskCardModal(state: State, onStateChange: (State) -> Unit, authors: L
         CreateTaskHeader()
         HorizontalDivider()
         TitleInputField(state.title, state.titleError) {
-            onStateChange(state.copy(title = it, titleError = Title.isValid(it)))
+            onStateChange(state.copy(title = it, titleError = runCatching { Title(it) }.fold(
+                onSuccess = { TitleError.NONE },
+                onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
+            )))
         }
         ContentInputField(state.content) { onStateChange(state.copy(content = it)) }
         TagsInputField(state.tags, state.tagError) {
@@ -42,7 +46,10 @@ fun CreateTaskCardModal(state: State, onStateChange: (State) -> Unit, authors: L
             if (it.isEmpty()) {
                 onStateChange(state.copy(tags = it, tagError = TagError.NONE))
             } else {
-                onStateChange(state.copy(tags = it, tagError = Task.isValidTags(splitTags)))
+                onStateChange(state.copy(tags = it, tagError = runCatching { Tags(splitTags) }.fold(
+                    onSuccess = { TagError.NONE },
+                    onFailure = { e -> if (e is TagException) e.error else TagError.NONE }
+                )))
             }
         }
         TaskStateSelectField(state.selectedState) { newTaskState ->
@@ -55,7 +62,10 @@ fun CreateTaskCardModal(state: State, onStateChange: (State) -> Unit, authors: L
         HorizontalDivider()
 
         CreateTaskActionButtons(state.isNewTaskEnabled) {
-            onStateChange(state.copy(titleError = Title.isValid(state.title)))
+            onStateChange(state.copy(titleError = runCatching { Title(state.title) }.fold(
+                onSuccess = { TitleError.NONE },
+                onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
+            )))
         }
     }
 }
