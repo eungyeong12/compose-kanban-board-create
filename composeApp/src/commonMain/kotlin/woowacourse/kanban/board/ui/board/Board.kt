@@ -1,10 +1,12 @@
 package woowacourse.kanban.board.ui.board
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -16,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -25,6 +28,7 @@ import woowacourse.kanban.board.ui.board.components.BoardHeader
 import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
 import woowacourse.kanban.board.ui.taskcard.TaskCards
 import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
+import woowacourse.kanban.board.ui.theme.border
 
 @Composable
 fun Board(
@@ -45,9 +49,14 @@ fun Board(
         ) {
             Column {
                 BoardHeader(
+                    tasks = tasks,
                     onClick = { openDialog.value = true },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White)
                 )
+
+                HorizontalDivider(color = border)
 
                 TaskCards(tasks.tasks)
             }

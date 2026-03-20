@@ -3,12 +3,16 @@ package woowacourse.kanban.board.ui.board.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,43 +21,113 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.TaskState
+import woowacourse.kanban.board.domain.Tasks
+import woowacourse.kanban.board.ui.theme.completedRate
+import woowacourse.kanban.board.ui.theme.progressBar
+import woowacourse.kanban.board.ui.theme.progressBarTrack
+import woowacourse.kanban.board.ui.theme.titleText
 
 @Composable
 fun BoardHeader(
+    tasks: Tasks,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
+    Column(
         modifier = modifier.padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column {
-            Text(
-                text = "Compose Desktop 칸반 보드",
-                fontWeight = FontWeight.W500,
-                fontSize = 24.sp
-            )
-        }
-        Button(
-            onClick = onClick
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Icon(
-                Icons.Default.Add,
-                contentDescription = "새 태스크 생성",
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = "새 태스크 생성",
-                fontWeight = FontWeight.W400,
-                fontSize = 16.sp
-            )
+            Column {
+                BoardTitle()
+                Spacer(modifier = Modifier.height(6.dp))
+                TaskCompletedRate(tasks)
+            }
+            CreateTaskButton(onClick = onClick)
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        ProjectProgress(
+            doneCount = tasks.countByState(TaskState.DONE),
+            totalCount = tasks.tasks.size
+        )
     }
+}
+
+@Composable
+private fun BoardTitle(modifier: Modifier = Modifier) {
+    Text(
+        text = "Compose Desktop 칸반 보드",
+        modifier = modifier,
+        fontWeight = FontWeight.W500,
+        fontSize = 24.sp,
+        color = titleText
+    )
+}
+
+@Composable
+private fun TaskCompletedRate(tasks: Tasks, modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        text = "완료율: ${tasks.completedRate()}% (${tasks.countByState(TaskState.DONE)}/${tasks.tasks.size})",
+        fontWeight = FontWeight.W400,
+        fontSize = 14.sp,
+        color = completedRate
+    )
+}
+
+@Composable
+private fun CreateTaskButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Icon(
+            Icons.Default.Add,
+            contentDescription = "새 태스크 생성",
+            modifier = Modifier.size(20.dp)
+        )
+        Text(
+            text = "새 태스크 생성",
+            fontWeight = FontWeight.W400,
+            fontSize = 16.sp
+        )
+    }
+}
+
+@Composable
+private fun ProjectProgress(
+    doneCount: Int,
+    totalCount: Int,
+    modifier: Modifier = Modifier
+) {
+    val progress = if (totalCount == 0) 0f else doneCount.toFloat() / totalCount.toFloat()
+
+    LinearProgressIndicator(
+        gapSize = 0.dp,
+        progress = { progress },
+        modifier = modifier
+            .fillMaxWidth()
+            .height(8.dp),
+        color = progressBar,
+        trackColor = progressBarTrack,
+    )
 }
 
 @Preview
 @Composable
 private fun BoardHeaderPreview() {
-    BoardHeader(onClick = {})
+    BoardHeader(
+        tasks = Tasks(listOf(
+            Task(title = "title1", taskState = TaskState.DONE),
+            Task(title = "title2", taskState = TaskState.DONE),
+            Task(title = "title3", taskState = TaskState.TO_DO),
+            Task(title = "title4", taskState = TaskState.IN_PROGRESS),
+        )),
+        onClick = {}
+    )
 }

@@ -4,10 +4,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.onClick
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,10 +32,13 @@ fun CreateTaskHeader(
             color = titleText,
             fontWeight = FontWeight.W600,
         )
-        Icon(
-            imageVector = Icons.Default.Close,
-            contentDescription = "닫기",
-            modifier = Modifier.onClick { onDismissRequest() },
-        )
+        IconButton(
+            onClick = { onDismissRequest() }
+        ) {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = "닫기"
+            )
+        }
     }
 }
