@@ -26,4 +26,21 @@ class TasksTest {
         assertThat(inProgressCount).isEqualTo(1)
         assertThat(toDoCount).isEqualTo(2)
     }
+
+    @Test
+    fun `전체 할 일 중 완료된 일의 비율을 올바르게 반환한다`() {
+        // given
+        val tasks = Tasks(listOf(
+            Task(title = "title1", taskState = TaskState.TO_DO),
+            Task(title = "title2", taskState = TaskState.TO_DO),
+            Task(title = "title4", taskState = TaskState.DONE),
+            Task(title = "title5", taskState = TaskState.DONE),
+        ))
+
+        // when
+        val completedRate = tasks.completedRate()
+
+        // then
+        assertThat(completedRate).isEqualTo(50)
+    }
 }
