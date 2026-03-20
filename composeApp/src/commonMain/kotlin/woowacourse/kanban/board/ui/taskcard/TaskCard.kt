@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
+import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.ui.theme.profileText
 import woowacourse.kanban.board.ui.theme.tagBackground
 import woowacourse.kanban.board.ui.theme.tagText
@@ -37,7 +38,7 @@ import woowacourse.kanban.board.ui.theme.taskCardContent
 import woowacourse.kanban.board.ui.theme.taskCardTitle
 
 @Composable
-fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(), author: String) {
+fun TaskCard(task: Task) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -49,11 +50,11 @@ fun TaskCard(title: String, content: String = "", tags: List<String> = listOf(),
             modifier = Modifier.padding(17.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Title(title = title)
-            if (content.isNotEmpty()) Content(content = content)
-            if (tags.isNotEmpty()) Tags(tags = tags)
+            Title(title = task.title)
+            if (task.content.isNotEmpty()) Content(content = task.content)
+            if (task.tags.isNotEmpty()) Tags(tags = task.tags)
             HorizontalDivider(color = taskCardBorder)
-            Profile(author = author)
+            Profile(author = task.author)
         }
     }
 }
@@ -131,9 +132,11 @@ private fun Profile(author: String) {
 @Composable
 private fun TaskCardPreview() {
     TaskCard(
-        title = "LazyColumn 컴포넌트 구현",
-        content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-        tags = listOf("컴포넌트", "성능"),
-        author = "다이노",
+        Task(
+            title = "LazyColumn 컴포넌트 구현",
+            content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
+            tags = listOf("컴포넌트", "성능"),
+            author = "다이노"
+        )
     )
 }

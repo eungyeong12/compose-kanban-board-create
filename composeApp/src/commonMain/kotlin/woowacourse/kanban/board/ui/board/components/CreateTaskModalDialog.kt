@@ -4,29 +4,34 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.ui.taskcard.CreateTaskCardModal
-import woowacourse.kanban.board.ui.taskcard.state.State
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 
 @Composable
 fun CreateTaskModalDialog(
     authors: List<String>,
-    state: State,
-    onStateChange: (State) -> Unit,
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    onConfirmation: (Task) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+
     Dialog(
         onDismissRequest = {},
     ) {
         CreateTaskCardModal(
-            state = state,
-            onStateChange = onStateChange,
+            taskInputState = taskInputState,
+            onStateChange = { taskInputState = it },
             authors = authors,
             onDismissRequest = onDismissRequest,
             onConfirmation = onConfirmation,
@@ -43,8 +48,6 @@ fun CreateTaskModalDialog(
 private fun CreateTaskModalDialogPreview() {
     CreateTaskModalDialog(
         authors = listOf("다이노", "페임스"),
-        state = State(),
-        onStateChange = {},
         onDismissRequest = {},
         onConfirmation = {},
     )

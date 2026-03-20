@@ -4,7 +4,7 @@ import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.exception.TagError
 import woowacourse.kanban.board.exception.TitleError
 
-data class State(
+data class TaskInputState(
     val title: String = "",
     val titleError: TitleError = TitleError.NONE,
     val content: String = "",

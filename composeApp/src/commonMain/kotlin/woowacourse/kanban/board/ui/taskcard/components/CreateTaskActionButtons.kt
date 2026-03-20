@@ -22,7 +22,10 @@ import woowacourse.kanban.board.ui.theme.createButtonDisableContent
 import woowacourse.kanban.board.ui.theme.createButtonDisabledContainer
 
 @Composable
-fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onCreateClick: () -> Unit) {
+fun CreateTaskActionButtons(
+    isNewTaskEnabled: Boolean,
+    onCreateClick: () -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
@@ -39,7 +42,7 @@ fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onCreateClick: () -> Unit
         }
         Spacer(modifier = Modifier.width(12.dp))
         Button(
-            onClick = onCreateClick,
+            onClick = { onCreateClick() },
             enabled = isNewTaskEnabled,
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(

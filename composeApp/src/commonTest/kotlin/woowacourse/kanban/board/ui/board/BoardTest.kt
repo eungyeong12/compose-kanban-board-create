@@ -1,11 +1,20 @@
 package woowacourse.kanban.board.ui.board
 
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.useResource
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.runComposeUiTest
-import woowacourse.kanban.board.ui.taskcard.state.State
+import woowacourse.kanban.board.domain.Tasks
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)
@@ -16,9 +25,9 @@ class BoardTest {
         // given
         setContent {
             Board(
+                tasks = Tasks(emptyList()),
+                onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
-                state = State(),
-                onStateChange = {},
             )
         }
 
@@ -34,9 +43,9 @@ class BoardTest {
         // given
         setContent {
             Board(
+                tasks = Tasks(emptyList()),
+                onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
-                state = State(),
-                onStateChange = {},
             )
         }
 
@@ -46,5 +55,49 @@ class BoardTest {
 
         // then
         onNodeWithText("태스크 제목을 입력하세요", useUnmergedTree = true).assertDoesNotExist()
+    }
+
+    @Test
+    fun `유효한 입력 후 생성 버튼을 클릭하면 새 태스크가 노출된다`() = runComposeUiTest {
+        // given
+        setContent {
+            var tasks by remember { mutableStateOf(Tasks(emptyList())) }
+
+            Board(
+                tasks = tasks,
+                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
+                authors = listOf("다이노", "페임스"),
+            )
+        }
+
+        // when
+        onNodeWithText("새 태스크 생성").performClick()
+        onNodeWithText("태스크 제목을 입력하세요").performTextInput("title")
+        onNodeWithText("생성").performClick()
+
+        // then
+        onNodeWithText("title", useUnmergedTree = true).assertExists()
+    }
+
+    @Test
+    fun `새로운 태스크가 추가되면 Snackbar를 노출한다`() = runComposeUiTest {
+        // given
+        setContent {
+            var tasks by remember { mutableStateOf(Tasks(emptyList())) }
+
+            Board(
+                tasks = tasks,
+                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
+                authors = listOf("다이노", "페임스"),
+            )
+        }
+
+        // when
+        onNodeWithText("새 태스크 생성").performClick()
+        onNodeWithText("태스크 제목을 입력하세요").performTextInput("title")
+        onNodeWithText("생성").performClick()
+
+        // then
+        onNodeWithText("새로운 태스크가 추가되었습니다.").assertIsDisplayed()
     }
 }

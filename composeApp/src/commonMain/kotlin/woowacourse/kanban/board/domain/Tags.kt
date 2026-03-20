@@ -4,12 +4,11 @@ import woowacourse.kanban.board.exception.TagError
 import woowacourse.kanban.board.exception.TagException
 
 @JvmInline
-value class Tags(val tags: String) {
+value class Tags(val tags: List<String>) {
     init {
-        val splitTags = tags.split(",").map { tag -> tag.trim() }
-        splitTags.forEach {
+        tags.forEach {
             runCatching { Tag(it) }.onFailure { exception -> throw exception }
         }
-        if (splitTags.size > 5) throw TagException(TagError.TOO_MANY)
+        if (tags.size > 5) throw TagException(TagError.TOO_MANY)
     }
 }

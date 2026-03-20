@@ -1,6 +1,7 @@
 package woowacourse.kanban.board
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,19 +10,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.Board
-import woowacourse.kanban.board.ui.taskcard.state.State
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 
 @Preview(showBackground = true)
 @Composable
 fun App() {
     val authors = listOf("다이노", "페임스")
-    var state by remember { mutableStateOf(State(selectedAuthor = authors.first())) }
+    var tasks by remember { mutableStateOf(Tasks(emptyList())) }
 
     Board(
+        tasks = tasks,
+        onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
         authors = authors,
-        state = state,
-        onStateChange = { state = it },
         modifier = Modifier.size(width = 1295.dp, height = 909.dp)
     )
 }

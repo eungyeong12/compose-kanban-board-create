@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.Tags
+import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.Title
 import woowacourse.kanban.board.exception.TagError
 import woowacourse.kanban.board.exception.TagException
@@ -24,15 +25,16 @@ import woowacourse.kanban.board.ui.taskcard.components.CreateTaskHeader
 import woowacourse.kanban.board.ui.taskcard.components.TagsInputField
 import woowacourse.kanban.board.ui.taskcard.components.TaskStateSelectField
 import woowacourse.kanban.board.ui.taskcard.components.TitleInputField
-import woowacourse.kanban.board.ui.taskcard.state.State
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
+import woowacourse.kanban.board.util.splitByComma
 
 @Composable
 fun CreateTaskCardModal(
-    state: State,
-    onStateChange: (State) -> Unit,
+    taskInputState: TaskInputState,
+    onStateChange: (TaskInputState) -> Unit,
     authors: List<String>,
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    onConfirmation: (Task) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,38 +43,42 @@ fun CreateTaskCardModal(
     ) {
         CreateTaskHeader(onDismissRequest)
         HorizontalDivider()
-        TitleInputField(state.title, state.titleError) {
-            onStateChange(state.copy(title = it, titleError = runCatching { Title(it) }.fold(
+        TitleInputField(taskInputState.title, taskInputState.titleError) {
+            onStateChange(taskInputState.copy(title = it, titleError = runCatching { Title(it) }.fold(
                 onSuccess = { TitleError.NONE },
                 onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
             )))
         }
-        ContentInputField(state.content) { onStateChange(state.copy(content = it)) }
-        TagsInputField(state.tags, state.tagError) {
+        ContentInputField(taskInputState.content) { onStateChange(taskInputState.copy(content = it)) }
+        TagsInputField(taskInputState.tags, taskInputState.tagError) {
             if (it.isEmpty()) {
-                onStateChange(state.copy(tags = it, tagError = TagError.NONE))
+                onStateChange(taskInputState.copy(tags = it, tagError = TagError.NONE))
             } else {
-                onStateChange(state.copy(tags = it, tagError = runCatching { Tags(it) }.fold(
+                onStateChange(taskInputState.copy(tags = it, tagError = runCatching { Tags(splitByComma((it))) }.fold(
                     onSuccess = { TagError.NONE },
                     onFailure = { e -> if (e is TagException) e.error else TagError.NONE }
                 )))
             }
         }
-        TaskStateSelectField(state.selectedState) { newTaskState ->
-            onStateChange(state.copy(selectedState = newTaskState))
+        TaskStateSelectField(taskInputState.selectedState) { newTaskState ->
+            onStateChange(taskInputState.copy(selectedState = newTaskState))
         }
-        AuthorSelectField(authors, state.selectedAuthor) { newAuthor ->
-            onStateChange(state.copy(selectedAuthor = newAuthor))
+        AuthorSelectField(authors, taskInputState.selectedAuthor) { newAuthor ->
+            onStateChange(taskInputState.copy(selectedAuthor = newAuthor))
         }
 
         HorizontalDivider()
 
-        CreateTaskActionButtons(state.isNewTaskEnabled) {
-            onStateChange(state.copy(titleError = runCatching { Title(state.title) }.fold(
-                onSuccess = { TitleError.NONE },
-                onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
-            )))
-        }
+        CreateTaskActionButtons(
+            taskInputState.isNewTaskEnabled,
+            {
+                val result = runCatching { Title(taskInputState.title) }
+                onStateChange(taskInputState.copy(titleError = result.fold(
+                    onSuccess = { TitleError.NONE }, onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
+                )))
+                if (result.isSuccess) onConfirmation(Task(taskInputState.title, taskInputState.content, splitByComma(taskInputState.tags), taskInputState.selectedState, taskInputState.selectedAuthor))
+            }
+        )
     }
 }
 
@@ -80,7 +86,7 @@ fun CreateTaskCardModal(
 @Composable
 private fun PreviewCreateTaskCardModal() {
     CreateTaskCardModal(
-        state = State(),
+        taskInputState = TaskInputState(),
         onStateChange = {},
         authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
