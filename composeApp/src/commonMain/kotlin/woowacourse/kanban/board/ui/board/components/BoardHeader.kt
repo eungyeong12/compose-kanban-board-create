@@ -1,5 +1,6 @@
 package woowacourse.kanban.board.ui.board.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,15 +9,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +29,7 @@ import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.theme.completedRate
+import woowacourse.kanban.board.ui.theme.createTaskButton
 import woowacourse.kanban.board.ui.theme.progressBar
 import woowacourse.kanban.board.ui.theme.progressBarTrack
 import woowacourse.kanban.board.ui.theme.titleText
@@ -84,7 +89,12 @@ private fun TaskCompletedRate(tasks: Tasks, modifier: Modifier = Modifier) {
 private fun CreateTaskButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = createTaskButton,
+            contentColor = Color.White
+        ),
+        shape = RoundedCornerShape(8.dp)
     ) {
         Icon(
             Icons.Default.Add,
