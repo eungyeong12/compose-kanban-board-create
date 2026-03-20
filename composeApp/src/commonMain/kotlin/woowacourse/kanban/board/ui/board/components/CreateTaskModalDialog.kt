@@ -28,6 +28,8 @@ fun CreateTaskModalDialog(
             state = state,
             onStateChange = onStateChange,
             authors = authors,
+            onDismissRequest = onDismissRequest,
+            onConfirmation = onConfirmation,
             modifier = modifier
                 .width(672.dp)
                 .background(Color.White)

@@ -1,8 +1,10 @@
 package woowacourse.kanban.board.ui.taskcard.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.onClick
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
@@ -14,8 +16,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.ui.theme.titleText
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CreateTaskHeader() {
+fun CreateTaskHeader(
+    onDismissRequest: () -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -30,6 +35,7 @@ fun CreateTaskHeader() {
         Icon(
             imageVector = Icons.Default.Close,
             contentDescription = "닫기",
+            modifier = Modifier.onClick { onDismissRequest() },
         )
     }
 }

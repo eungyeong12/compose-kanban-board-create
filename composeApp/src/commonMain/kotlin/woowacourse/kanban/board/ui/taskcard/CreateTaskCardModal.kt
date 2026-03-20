@@ -27,12 +27,19 @@ import woowacourse.kanban.board.ui.taskcard.components.TitleInputField
 import woowacourse.kanban.board.ui.taskcard.state.State
 
 @Composable
-fun CreateTaskCardModal(state: State, onStateChange: (State) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {
+fun CreateTaskCardModal(
+    state: State,
+    onStateChange: (State) -> Unit,
+    authors: List<String>,
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        CreateTaskHeader()
+        CreateTaskHeader(onDismissRequest)
         HorizontalDivider()
         TitleInputField(state.title, state.titleError) {
             onStateChange(state.copy(title = it, titleError = runCatching { Title(it) }.fold(
@@ -76,6 +83,8 @@ private fun PreviewCreateTaskCardModal() {
         state = State(),
         onStateChange = {},
         authors = listOf("다이노", "페임스"),
+        onDismissRequest = {},
+        onConfirmation = {},
         modifier = Modifier
             .background(Color.White).padding(16.dp),
     )

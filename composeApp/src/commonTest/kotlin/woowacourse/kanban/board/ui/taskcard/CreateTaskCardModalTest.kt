@@ -29,6 +29,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("지워질 제목입니다").performTextClearance()
@@ -43,6 +45,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
 
@@ -61,6 +65,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -79,6 +85,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -97,6 +105,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -115,6 +125,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -133,6 +145,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -151,6 +165,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
 
@@ -166,6 +182,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("To Do").performClick()
@@ -186,6 +204,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
 
@@ -200,6 +220,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
 
@@ -219,6 +241,8 @@ class CreateTaskCardModalTest {
                 state = state,
                 onStateChange = { state = it },
                 authors = authors,
+                onDismissRequest = {},
+                onConfirmation = {},
             )
         }
         onNodeWithText("생성").performClick() // 초기 화면은 항상 생성 버튼이 활성회되기 때문에 비활성화 처리를 위해 수행
