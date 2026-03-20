@@ -25,7 +25,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.TaskState
-import woowacourse.kanban.board.domain.toText
+import woowacourse.kanban.board.ui.board.components.toText
 import woowacourse.kanban.board.ui.theme.accountCircle
 import woowacourse.kanban.board.ui.theme.authorSelected
 import woowacourse.kanban.board.ui.theme.authorText

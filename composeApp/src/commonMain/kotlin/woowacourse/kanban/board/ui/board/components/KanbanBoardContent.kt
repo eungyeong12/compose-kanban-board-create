@@ -1,0 +1,128 @@
+package woowacourse.kanban.board.ui.board.components
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import woowacourse.kanban.board.domain.TaskState
+import woowacourse.kanban.board.domain.Tasks
+import woowacourse.kanban.board.ui.taskcard.TaskCards
+
+@Composable
+fun KanbanBoardContent(
+    tasks: Tasks,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        TaskState.entries.forEach { taskState ->
+            StateTasks(
+                tasks,
+                taskState,
+                taskState.titleColor(),
+                taskState.contentColor(),
+                taskState.borderColor()
+            )
+        }
+    }
+}
+
+@Composable
+private fun StateTasks(
+    tasks: Tasks,
+    taskState: TaskState,
+    titleColor: Color,
+    contentColor: Color,
+    borderColor: Color,
+    modifier: Modifier = Modifier
+) {
+    OutlinedCard(
+        colors = CardDefaults.cardColors(
+            containerColor = contentColor,
+
+        ),
+        border = BorderStroke(0.5.dp, borderColor),
+        modifier = modifier.size(width = 320.dp, height = 748.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .width(320.dp)
+                .background(titleColor)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = taskState.toText(),
+                fontWeight = FontWeight.W600,
+                fontSize = 16.sp,
+            )
+            Box(
+                modifier = Modifier
+                    .size(width = 29.dp, height = 24.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Color.White)
+            ) {
+                Text(
+                    text = tasks.countByState(taskState).toString(),
+                    fontWeight = FontWeight.W500,
+                    fontSize = 14.sp,
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
+        }
+        TaskCards(
+            tasks.getTasksByState(taskState),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        )
+    }
+}
+
+fun TaskState.toText(): String = when (this) {
+    TaskState.TO_DO -> "To Do"
+    TaskState.IN_PROGRESS -> "In Progress"
+    TaskState.DONE -> "Done"
+}
+
+private fun TaskState.titleColor(): Color = when (this) {
+    TaskState.TO_DO -> Color(0xFF155DFC)
+    TaskState.IN_PROGRESS -> Color(0xFFE17100)
+    TaskState.DONE -> Color(0xFF00A63E)
+}
+
+private fun TaskState.contentColor(): Color = when (this) {
+    TaskState.TO_DO -> Color(0xFFEFF6FF)
+    TaskState.IN_PROGRESS -> Color(0xFFFFFBEB)
+    TaskState.DONE -> Color(0xFFF0FDF4)
+}
+
+private fun TaskState.borderColor(): Color = when (this) {
+    TaskState.TO_DO -> Color(0xFFBEDBFF)
+    TaskState.IN_PROGRESS -> Color(0xFFFEE685)
+    TaskState.DONE -> Color(0xFFB9F8CF)
+}

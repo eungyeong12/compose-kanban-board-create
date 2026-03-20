@@ -43,4 +43,22 @@ class TasksTest {
         // then
         assertThat(completedRate).isEqualTo(50)
     }
+
+    @Test
+    fun `상태별 태스크 목록을 올바르게 불러온다`() {
+        // given
+        val tasks = Tasks(listOf(
+            Task(title = "title1", taskState = TaskState.TO_DO),
+            Task(title = "title2", taskState = TaskState.TO_DO),
+            Task(title = "title4", taskState = TaskState.DONE),
+            Task(title = "title5", taskState = TaskState.DONE),
+        ))
+
+        // when
+        val toDoTasks = tasks.getTasksByState(TaskState.TO_DO)
+
+        // then
+        assertThat(toDoTasks.size).isEqualTo(2)
+        assertThat(toDoTasks.first().title).isEqualTo("title1")
+    }
 }

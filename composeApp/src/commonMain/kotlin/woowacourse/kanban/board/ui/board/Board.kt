@@ -3,6 +3,7 @@ package woowacourse.kanban.board.ui.board
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,8 +27,10 @@ import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.components.BoardHeader
 import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
+import woowacourse.kanban.board.ui.board.components.KanbanBoardContent
 import woowacourse.kanban.board.ui.taskcard.TaskCards
 import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
+import woowacourse.kanban.board.ui.theme.boardBackground
 import woowacourse.kanban.board.ui.theme.border
 
 @Composable
@@ -58,7 +61,12 @@ fun Board(
 
                 HorizontalDivider(color = border)
 
-                TaskCards(tasks.tasks)
+                KanbanBoardContent(
+                    tasks,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(boardBackground)
+                )
             }
 
             if (openDialog.value) {
