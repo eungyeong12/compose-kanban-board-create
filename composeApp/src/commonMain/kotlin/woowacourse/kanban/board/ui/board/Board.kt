@@ -30,21 +30,16 @@ import woowacourse.kanban.board.ui.theme.boardBackground
 import woowacourse.kanban.board.ui.theme.border
 
 @Composable
-fun Board(
-    tasks: Tasks,
-    onTaskCreated: (Task) -> Unit,
-    authors: List<String>,
-    modifier: Modifier = Modifier
-) {
+fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {
     val openDialog = remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         Box(
-            modifier = modifier.padding(innerPadding)
+            modifier = modifier.padding(innerPadding),
         ) {
             Column {
                 BoardHeader(
@@ -52,7 +47,7 @@ fun Board(
                     onClick = { openDialog.value = true },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.White)
+                        .background(Color.White),
                 )
 
                 HorizontalDivider(color = border)
@@ -61,7 +56,7 @@ fun Board(
                     tasks,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(boardBackground)
+                        .background(boardBackground),
                 )
             }
 
@@ -74,14 +69,16 @@ fun Board(
                     onConfirmation = {
                         onTaskCreated(it)
                         openDialog.value = false
-                        scope.launch { snackbarHostState.showSnackbar(
-                            message = "새로운 태스크가 추가되었습니다.",
-                            withDismissAction = true
-                        ) }
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "새로운 태스크가 추가되었습니다.",
+                                withDismissAction = true,
+                            )
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center)
+                        .align(Alignment.Center),
                 )
             }
         }
@@ -95,6 +92,6 @@ fun BoardPreview() {
         tasks = Tasks(emptyList()),
         onTaskCreated = {},
         authors = listOf("다이노", "페임스"),
-        modifier = Modifier.size(width = 1295.dp, height = 909.dp)
+        modifier = Modifier.size(width = 1295.dp, height = 909.dp),
     )
 }

@@ -22,7 +22,7 @@ fun CreateTaskModalDialog(
     authors: List<String>,
     onDismissRequest: () -> Unit,
     onConfirmation: (Task) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
 

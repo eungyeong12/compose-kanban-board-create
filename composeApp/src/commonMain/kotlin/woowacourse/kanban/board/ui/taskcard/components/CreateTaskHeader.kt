@@ -18,9 +18,7 @@ import woowacourse.kanban.board.ui.theme.titleText
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CreateTaskHeader(
-    onDismissRequest: () -> Unit,
-) {
+fun CreateTaskHeader(onDismissRequest: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -33,11 +31,11 @@ fun CreateTaskHeader(
             fontWeight = FontWeight.W600,
         )
         IconButton(
-            onClick = { onDismissRequest() }
+            onClick = { onDismissRequest() },
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = "닫기"
+                contentDescription = "닫기",
             )
         }
     }

@@ -26,13 +26,10 @@ import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.taskcard.TaskCards
 
 @Composable
-fun KanbanBoardContent(
-    tasks: Tasks,
-    modifier: Modifier = Modifier
-) {
+fun KanbanBoardContent(tasks: Tasks, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier.padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         TaskState.entries.forEach { taskState ->
             StateTasks(
@@ -40,7 +37,7 @@ fun KanbanBoardContent(
                 taskState,
                 taskState.titleColor(),
                 taskState.contentColor(),
-                taskState.borderColor()
+                taskState.borderColor(),
             )
         }
     }
@@ -53,7 +50,7 @@ private fun StateTasks(
     titleColor: Color,
     contentColor: Color,
     borderColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(
@@ -61,32 +58,27 @@ private fun StateTasks(
 
         ),
         border = BorderStroke(0.5.dp, borderColor),
-        modifier = modifier.size(width = 320.dp, height = 748.dp)
+        modifier = modifier.size(width = 320.dp, height = 748.dp),
     ) {
         StateTasksTitle(titleColor, taskState, tasks)
         TaskCards(
             tasks.getTasksByState(taskState),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }
 
 @Composable
-private fun StateTasksTitle(
-    titleColor: Color,
-    taskState: TaskState,
-    tasks: Tasks,
-    modifier: Modifier = Modifier
-) {
+private fun StateTasksTitle(titleColor: Color, taskState: TaskState, tasks: Tasks, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .width(320.dp)
             .background(titleColor)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             text = taskState.toText(),
@@ -97,7 +89,7 @@ private fun StateTasksTitle(
             modifier = Modifier
                 .size(width = 29.dp, height = 24.dp)
                 .clip(RoundedCornerShape(24.dp))
-                .background(Color.White)
+                .background(Color.White),
         ) {
             Text(
                 text = tasks.countByState(taskState).toString(),

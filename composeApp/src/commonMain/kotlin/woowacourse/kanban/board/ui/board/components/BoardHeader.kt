@@ -1,6 +1,5 @@
 package woowacourse.kanban.board.ui.board.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,18 +34,14 @@ import woowacourse.kanban.board.ui.theme.progressBarTrack
 import woowacourse.kanban.board.ui.theme.titleText
 
 @Composable
-fun BoardHeader(
-    tasks: Tasks,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column {
                 BoardTitle()
@@ -58,7 +53,7 @@ fun BoardHeader(
         Spacer(modifier = Modifier.height(16.dp))
         ProjectProgress(
             doneCount = tasks.countByState(TaskState.DONE),
-            totalCount = tasks.tasks.size
+            totalCount = tasks.tasks.size,
         )
     }
 }
@@ -70,7 +65,7 @@ private fun BoardTitle(modifier: Modifier = Modifier) {
         modifier = modifier,
         fontWeight = FontWeight.W500,
         fontSize = 24.sp,
-        color = titleText
+        color = titleText,
     )
 }
 
@@ -81,7 +76,7 @@ private fun TaskCompletedRate(tasks: Tasks, modifier: Modifier = Modifier) {
         text = "완료율: ${tasks.completedRate()}% (${tasks.countByState(TaskState.DONE)}/${tasks.tasks.size})",
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
-        color = completedRate
+        color = completedRate,
     )
 }
 
@@ -92,29 +87,25 @@ private fun CreateTaskButton(onClick: () -> Unit, modifier: Modifier = Modifier)
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = createTaskButton,
-            contentColor = Color.White
+            contentColor = Color.White,
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
     ) {
         Icon(
             Icons.Default.Add,
             contentDescription = "새 태스크 생성",
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(20.dp),
         )
         Text(
             text = "새 태스크 생성",
             fontWeight = FontWeight.W400,
-            fontSize = 16.sp
+            fontSize = 16.sp,
         )
     }
 }
 
 @Composable
-private fun ProjectProgress(
-    doneCount: Int,
-    totalCount: Int,
-    modifier: Modifier = Modifier
-) {
+private fun ProjectProgress(doneCount: Int, totalCount: Int, modifier: Modifier = Modifier) {
     val progress = if (totalCount == 0) 0f else doneCount.toFloat() / totalCount.toFloat()
 
     LinearProgressIndicator(
@@ -132,12 +123,14 @@ private fun ProjectProgress(
 @Composable
 private fun BoardHeaderPreview() {
     BoardHeader(
-        tasks = Tasks(listOf(
-            Task(title = "title1", taskState = TaskState.DONE),
-            Task(title = "title2", taskState = TaskState.DONE),
-            Task(title = "title3", taskState = TaskState.TO_DO),
-            Task(title = "title4", taskState = TaskState.IN_PROGRESS),
-        )),
-        onClick = {}
+        tasks = Tasks(
+            listOf(
+                Task(title = "title1", taskState = TaskState.DONE),
+                Task(title = "title2", taskState = TaskState.DONE),
+                Task(title = "title3", taskState = TaskState.TO_DO),
+                Task(title = "title4", taskState = TaskState.IN_PROGRESS),
+            ),
+        ),
+        onClick = {},
     )
 }

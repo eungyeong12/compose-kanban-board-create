@@ -9,10 +9,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.Task
 
 @Composable
-fun TaskCards(
-    tasks: List<Task>,
-    modifier: Modifier = Modifier
-) {
+fun TaskCards(tasks: List<Task>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp),

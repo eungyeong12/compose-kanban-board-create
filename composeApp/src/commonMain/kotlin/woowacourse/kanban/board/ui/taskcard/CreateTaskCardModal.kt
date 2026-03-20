@@ -35,7 +35,7 @@ fun CreateTaskCardModal(
     authors: List<String>,
     onDismissRequest: () -> Unit,
     onConfirmation: (Task) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -44,20 +44,30 @@ fun CreateTaskCardModal(
         CreateTaskHeader(onDismissRequest)
         HorizontalDivider()
         TitleInputField(taskInputState.title, taskInputState.titleError) {
-            onStateChange(taskInputState.copy(title = it, titleError = runCatching { Title(it) }.fold(
-                onSuccess = { TitleError.NONE },
-                onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
-            )))
+            onStateChange(
+                taskInputState.copy(
+                    title = it,
+                    titleError = runCatching { Title(it) }.fold(
+                        onSuccess = { TitleError.NONE },
+                        onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE },
+                    ),
+                ),
+            )
         }
         ContentInputField(taskInputState.content) { onStateChange(taskInputState.copy(content = it)) }
         TagsInputField(taskInputState.tags, taskInputState.tagError) {
             if (it.isEmpty()) {
                 onStateChange(taskInputState.copy(tags = it, tagError = TagError.NONE))
             } else {
-                onStateChange(taskInputState.copy(tags = it, tagError = runCatching { Tags(splitByComma((it))) }.fold(
-                    onSuccess = { TagError.NONE },
-                    onFailure = { e -> if (e is TagException) e.error else TagError.NONE }
-                )))
+                onStateChange(
+                    taskInputState.copy(
+                        tags = it,
+                        tagError = runCatching { Tags(splitByComma((it))) }.fold(
+                            onSuccess = { TagError.NONE },
+                            onFailure = { e -> if (e is TagException) e.error else TagError.NONE },
+                        ),
+                    ),
+                )
             }
         }
         TaskStateSelectField(taskInputState.selectedState) { newTaskState ->
@@ -74,11 +84,25 @@ fun CreateTaskCardModal(
             onDismissRequest,
             {
                 val result = runCatching { Title(taskInputState.title) }
-                onStateChange(taskInputState.copy(titleError = result.fold(
-                    onSuccess = { TitleError.NONE }, onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE }
-                )))
-                if (result.isSuccess) onConfirmation(Task(taskInputState.title, taskInputState.content, splitByComma(taskInputState.tags), taskInputState.selectedState, taskInputState.selectedAuthor))
-            }
+                onStateChange(
+                    taskInputState.copy(
+                        titleError = result.fold(
+                            onSuccess = { TitleError.NONE }, onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE },
+                        ),
+                    ),
+                )
+                if (result.isSuccess) {
+                    onConfirmation(
+                        Task(
+                            taskInputState.title,
+                            taskInputState.content,
+                            splitByComma(taskInputState.tags),
+                            taskInputState.selectedState,
+                            taskInputState.selectedAuthor,
+                        ),
+                    )
+                }
+            },
         )
     }
 }
