@@ -5,5 +5,5 @@ data class Task(
     val content: String = "",
     val tags: List<String> = emptyList(),
     val taskState: TaskState = TaskState.TO_DO,
-    val author: String,
+    val author: String = "다이노",
 )
