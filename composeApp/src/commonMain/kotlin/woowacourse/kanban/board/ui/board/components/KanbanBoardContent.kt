@@ -2,18 +2,14 @@ package woowacourse.kanban.board.ui.board.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -67,39 +63,49 @@ private fun StateTasks(
         border = BorderStroke(0.5.dp, borderColor),
         modifier = modifier.size(width = 320.dp, height = 748.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .width(320.dp)
-                .background(titleColor)
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = taskState.toText(),
-                fontWeight = FontWeight.W600,
-                fontSize = 16.sp,
-            )
-            Box(
-                modifier = Modifier
-                    .size(width = 29.dp, height = 24.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(Color.White)
-            ) {
-                Text(
-                    text = tasks.countByState(taskState).toString(),
-                    fontWeight = FontWeight.W500,
-                    fontSize = 14.sp,
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            }
-        }
+        StateTasksTitle(titleColor, taskState, tasks)
         TaskCards(
             tasks.getTasksByState(taskState),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         )
+    }
+}
+
+@Composable
+private fun StateTasksTitle(
+    titleColor: Color,
+    taskState: TaskState,
+    tasks: Tasks,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .width(320.dp)
+            .background(titleColor)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = taskState.toText(),
+            fontWeight = FontWeight.W600,
+            fontSize = 16.sp,
+        )
+        Box(
+            modifier = Modifier
+                .size(width = 29.dp, height = 24.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color.White)
+        ) {
+            Text(
+                text = tasks.countByState(taskState).toString(),
+                fontWeight = FontWeight.W500,
+                fontSize = 14.sp,
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
     }
 }
 
