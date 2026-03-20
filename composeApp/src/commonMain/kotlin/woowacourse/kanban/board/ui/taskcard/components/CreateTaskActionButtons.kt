@@ -24,6 +24,7 @@ import woowacourse.kanban.board.ui.theme.createButtonDisabledContainer
 @Composable
 fun CreateTaskActionButtons(
     isNewTaskEnabled: Boolean,
+    onDismissRequest: () -> Unit,
     onCreateClick: () -> Unit,
 ) {
     Row(
@@ -32,7 +33,7 @@ fun CreateTaskActionButtons(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
-            onClick = {},
+            onClick = { onDismissRequest() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = cancelButtonContainer,
                 contentColor = cancelButtonContent,

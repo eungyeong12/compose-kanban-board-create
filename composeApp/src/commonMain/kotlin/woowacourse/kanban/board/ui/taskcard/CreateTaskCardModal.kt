@@ -71,6 +71,7 @@ fun CreateTaskCardModal(
 
         CreateTaskActionButtons(
             taskInputState.isNewTaskEnabled,
+            onDismissRequest,
             {
                 val result = runCatching { Title(taskInputState.title) }
                 onStateChange(taskInputState.copy(titleError = result.fold(
