@@ -90,19 +90,21 @@ private fun Tags(tags: List<String>) {
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         tags.forEach { tag ->
-            Box(
-                modifier = Modifier
-                    .height(24.dp)
-                    .background(tagBackground, MaterialTheme.shapes.large)
-                    .padding(horizontal = 8.dp),
-            ) {
-                Text(
-                    text = tag,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = tagText,
-                    fontSize = 12.sp,
-                    modifier = Modifier.align(Alignment.Center),
-                )
+            if (tag.isNotBlank()) {
+                Box(
+                    modifier = Modifier
+                        .height(24.dp)
+                        .background(tagBackground, MaterialTheme.shapes.large)
+                        .padding(horizontal = 8.dp),
+                ) {
+                    Text(
+                        text = tag,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = tagText,
+                        fontSize = 12.sp,
+                        modifier = Modifier.align(Alignment.Center),
+                    )
+                }
             }
         }
     }
