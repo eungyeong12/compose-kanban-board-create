@@ -57,7 +57,7 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
         borderColor = textFieldBorder,
         placeholder = "태스크에 대한 자세한 설명을 입력하세요",
         singleLine = false,
-        modifier = Modifier.heightIn(min = 144.dp),
+        modifier = Modifier.heightIn(min = 100.dp),
     )
 }
 
