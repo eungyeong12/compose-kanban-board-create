@@ -9,6 +9,10 @@ value class Tags(val tags: List<String>) {
         tags.forEach {
             runCatching { Tag(it) }.onFailure { exception -> throw exception }
         }
-        if (tags.size > 5) throw TagException(TagError.TOO_MANY)
+        if (tags.size > TAGS_MAX_SIZE) throw TagException(TagError.TOO_MANY)
+    }
+
+    companion object {
+        const val TAGS_MAX_SIZE = 5
     }
 }
