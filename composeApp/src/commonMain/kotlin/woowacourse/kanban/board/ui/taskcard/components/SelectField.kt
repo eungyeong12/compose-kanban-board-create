@@ -28,13 +28,13 @@ import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.ui.board.components.toText
 import woowacourse.kanban.board.ui.theme.AccountCircle
 import woowacourse.kanban.board.ui.theme.AuthorSelected
-import woowacourse.kanban.board.ui.theme.TextPrimary
 import woowacourse.kanban.board.ui.theme.OnSurfaceVariant
 import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.SelectedAuthorBackground
 import woowacourse.kanban.board.ui.theme.SelectedTaskStateBackground
 import woowacourse.kanban.board.ui.theme.TaskStateSelected
 import woowacourse.kanban.board.ui.theme.TaskStateText
+import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @Composable
 fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit) {

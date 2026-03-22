@@ -30,11 +30,11 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
 import woowacourse.kanban.board.domain.Task
-import woowacourse.kanban.board.ui.theme.TextSecondary
-import woowacourse.kanban.board.ui.theme.TagBackground
 import woowacourse.kanban.board.ui.theme.OutlineVariant
+import woowacourse.kanban.board.ui.theme.TagBackground
 import woowacourse.kanban.board.ui.theme.TaskCardContent
 import woowacourse.kanban.board.ui.theme.TextPrimary
+import woowacourse.kanban.board.ui.theme.TextSecondary
 
 @Composable
 fun TaskCard(task: Task) {

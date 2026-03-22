@@ -26,8 +26,8 @@ import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.components.BoardHeader
 import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
 import woowacourse.kanban.board.ui.board.components.KanbanBoardContent
-import woowacourse.kanban.board.ui.theme.Primary
 import woowacourse.kanban.board.ui.theme.OutlineVariant
+import woowacourse.kanban.board.ui.theme.Primary
 
 @Composable
 fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {

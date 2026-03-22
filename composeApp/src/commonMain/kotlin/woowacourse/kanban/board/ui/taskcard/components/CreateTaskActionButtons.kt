@@ -14,11 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.ui.theme.PrimaryContainer
-import woowacourse.kanban.board.ui.theme.TextSecondary
+import woowacourse.kanban.board.ui.theme.DisabledContainer
 import woowacourse.kanban.board.ui.theme.OnSurface
 import woowacourse.kanban.board.ui.theme.OnSurfaceVariant
-import woowacourse.kanban.board.ui.theme.DisabledContainer
+import woowacourse.kanban.board.ui.theme.PrimaryContainer
+import woowacourse.kanban.board.ui.theme.TextSecondary
 
 @Composable
 fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onDismissRequest: () -> Unit, onCreateClick: () -> Unit) {

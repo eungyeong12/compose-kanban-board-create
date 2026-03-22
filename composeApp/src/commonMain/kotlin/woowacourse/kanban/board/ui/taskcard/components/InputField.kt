@@ -20,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.exception.TagError
 import woowacourse.kanban.board.exception.TitleError
-import woowacourse.kanban.board.ui.theme.TextTertiary
-import woowacourse.kanban.board.ui.theme.Outline
 import woowacourse.kanban.board.ui.theme.OnError
+import woowacourse.kanban.board.ui.theme.Outline
 import woowacourse.kanban.board.ui.theme.PrimaryContainer
 import woowacourse.kanban.board.ui.theme.TextFieldPlaceholder
+import woowacourse.kanban.board.ui.theme.TextTertiary
 
 @Composable
 fun TitleInputField(title: String, titleError: TitleError, onValueChange: (String) -> Unit) {

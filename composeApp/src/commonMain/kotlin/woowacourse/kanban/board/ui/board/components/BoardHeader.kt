@@ -45,7 +45,11 @@ fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier
             Column {
                 BoardTitle()
                 Spacer(modifier = Modifier.height(6.dp))
-                TaskCompletedRate(tasks)
+                TaskCompletedRate(
+                    tasks.completedRate(),
+                    tasks.countByState(TaskState.DONE),
+                    tasks.tasks.size,
+                )
             }
             CreateTaskButton(onClick = onClick)
         }
@@ -69,10 +73,10 @@ private fun BoardTitle(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun TaskCompletedRate(tasks: Tasks, modifier: Modifier = Modifier) {
+private fun TaskCompletedRate(completedRate: Int, doneCount: Int, totalCount: Int, modifier: Modifier = Modifier) {
     Text(
         modifier = modifier,
-        text = "완료율: ${tasks.completedRate()}% (${tasks.countByState(TaskState.DONE)}/${tasks.tasks.size})",
+        text = "완료율: $completedRate% ($doneCount/$totalCount)",
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         color = CompletedRate,
