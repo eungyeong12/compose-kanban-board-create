@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 class TasksTest {
 
     @Test
-    fun `상태(To-Do, In Progress, Done)별 태스크 개수를 올바르게 반환한다`() {
+    fun `TODO 2개, INPROGRESS 1개, DONE 2개인 경우 각 상태별 태스크의 개수는 2, 1, 2가 반환한다`() {
         // given
         val tasks = Tasks(
             listOf(
@@ -24,13 +24,25 @@ class TasksTest {
         val doneCount = tasks.countByState(TaskState.DONE)
 
         // then
-        assertThat(doneCount).isEqualTo(2)
-        assertThat(inProgressCount).isEqualTo(1)
         assertThat(toDoCount).isEqualTo(2)
+        assertThat(inProgressCount).isEqualTo(1)
+        assertThat(doneCount).isEqualTo(2)
     }
 
     @Test
-    fun `전체 할 일 중 완료된 일의 비율을 올바르게 반환한다`() {
+    fun `Tasks가 비어 있는 경우 TODO의 개수는 0개이다`() {
+        // given
+        val tasks = Tasks(emptyList())
+
+        // when
+        val toDoCount = tasks.countByState(TaskState.TO_DO)
+
+        // then
+        assertThat(toDoCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `TODO 2개, DONE 2개인 경우 완료된 일의 비율은 50이다`() {
         // given
         val tasks = Tasks(
             listOf(
@@ -49,7 +61,19 @@ class TasksTest {
     }
 
     @Test
-    fun `상태별 태스크 목록을 올바르게 불러온다`() {
+    fun `Tasks가 비어있는 경우 완료된 일의 비율은 0이다`() {
+        // given
+        val tasks = Tasks(emptyList())
+
+        // when
+        val completedRate = tasks.completedRate()
+
+        // then
+        assertThat(completedRate).isEqualTo(0)
+    }
+
+    @Test
+    fun `TODO 2개, DONE 2개인 경우 TODO 상태의 태스크는 2개이고 첫 번째 태스크의 제목은 title1이다`() {
         // given
         val tasks = Tasks(
             listOf(
@@ -66,5 +90,17 @@ class TasksTest {
         // then
         assertThat(toDoTasks.size).isEqualTo(2)
         assertThat(toDoTasks.first().title).isEqualTo("title1")
+    }
+
+    @Test
+    fun `Tasks가 비어 있는 경우 TODO 상태의 태스크는 0개이다`() {
+        // given
+        val tasks = Tasks(emptyList())
+
+        // when
+        val toDoTasks = tasks.getTasksByState(TaskState.TO_DO)
+
+        // then
+        assertThat(toDoTasks.size).isEqualTo(0)
     }
 }
