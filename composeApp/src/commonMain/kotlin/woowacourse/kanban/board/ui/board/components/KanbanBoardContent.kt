@@ -25,6 +25,15 @@ import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.taskcard.TaskCards
+import woowacourse.kanban.board.ui.theme.DoneBorder
+import woowacourse.kanban.board.ui.theme.DoneContent
+import woowacourse.kanban.board.ui.theme.DoneTitle
+import woowacourse.kanban.board.ui.theme.InProgressBorder
+import woowacourse.kanban.board.ui.theme.InProgressContent
+import woowacourse.kanban.board.ui.theme.InProgressTitle
+import woowacourse.kanban.board.ui.theme.ToDoBorder
+import woowacourse.kanban.board.ui.theme.ToDoContent
+import woowacourse.kanban.board.ui.theme.ToDoTitle
 
 @Composable
 fun KanbanBoardContent(tasks: Tasks, modifier: Modifier = Modifier) {
@@ -109,19 +118,19 @@ fun TaskState.toText(): String = when (this) {
 }
 
 private fun TaskState.titleColor(): Color = when (this) {
-    TaskState.TO_DO -> Color(0xFF155DFC)
-    TaskState.IN_PROGRESS -> Color(0xFFE17100)
-    TaskState.DONE -> Color(0xFF00A63E)
+    TaskState.TO_DO -> ToDoTitle
+    TaskState.IN_PROGRESS -> InProgressTitle
+    TaskState.DONE -> DoneTitle
 }
 
 private fun TaskState.contentColor(): Color = when (this) {
-    TaskState.TO_DO -> Color(0xFFEFF6FF)
-    TaskState.IN_PROGRESS -> Color(0xFFFFFBEB)
-    TaskState.DONE -> Color(0xFFF0FDF4)
+    TaskState.TO_DO -> ToDoContent
+    TaskState.IN_PROGRESS -> InProgressContent
+    TaskState.DONE -> DoneContent
 }
 
 private fun TaskState.borderColor(): Color = when (this) {
-    TaskState.TO_DO -> Color(0xFFBEDBFF)
-    TaskState.IN_PROGRESS -> Color(0xFFFEE685)
-    TaskState.DONE -> Color(0xFFB9F8CF)
+    TaskState.TO_DO -> ToDoBorder
+    TaskState.IN_PROGRESS -> InProgressBorder
+    TaskState.DONE -> DoneBorder
 }
