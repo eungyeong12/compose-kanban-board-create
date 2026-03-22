@@ -80,30 +80,19 @@ fun CreateTaskCardModal(
         HorizontalDivider()
 
         CreateTaskActionButtons(
-            taskInputState.isNewTaskEnabled,
+            taskInputState.init.not() && taskInputState.isNewTaskEnabled,
             onDismissRequest,
-            {
-                val result = runCatching { Title(taskInputState.title) }
-                onStateChange(
-                    taskInputState.copy(
-                        titleError = result.fold(
-                            onSuccess = { TitleError.NONE }, onFailure = { e -> if (e is TitleException) e.error else TitleError.NONE },
-                        ),
-                    ),
-                )
-                if (result.isSuccess) {
-                    onConfirmation(
-                        Task(
-                            taskInputState.title,
-                            taskInputState.content,
-                            splitByComma(taskInputState.tags),
-                            taskInputState.selectedState,
-                            taskInputState.selectedAuthor,
-                        ),
-                    )
-                }
-            },
-        )
+        ) {
+            onConfirmation(
+                Task(
+                    taskInputState.title,
+                    taskInputState.content,
+                    splitByComma(taskInputState.tags),
+                    taskInputState.selectedState,
+                    taskInputState.selectedAuthor,
+                ),
+            )
+        }
     }
 }
 

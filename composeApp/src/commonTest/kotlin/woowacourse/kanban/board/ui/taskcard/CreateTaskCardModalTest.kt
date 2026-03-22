@@ -60,7 +60,7 @@ class CreateTaskCardModalTest {
     @Test
     fun `태그가 쉼표로 시작하면 형식 에러가 노출되고 생성 버튼이 활성화되지 않는다`() = runComposeUiTest {
         setContent {
-            var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+            var taskInputState by remember { mutableStateOf(TaskInputState(title = "제목", selectedAuthor = authors.first())) }
             CreateTaskCardModal(
                 taskInputState = taskInputState,
                 onStateChange = { taskInputState = it },
@@ -80,7 +80,7 @@ class CreateTaskCardModalTest {
     @Test
     fun `태그가 쉼표로 끝나면 형식 에러가 노출되고 생성 버튼이 활성화되지 않는다`() = runComposeUiTest {
         setContent {
-            var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+            var taskInputState by remember { mutableStateOf(TaskInputState(title = "제목", selectedAuthor = authors.first())) }
             CreateTaskCardModal(
                 taskInputState = taskInputState,
                 onStateChange = { taskInputState = it },
@@ -100,7 +100,7 @@ class CreateTaskCardModalTest {
     @Test
     fun `쉼표가 연달아 나오면 형식 에러가 노출되고 생성 버튼이 활성화되지 않는다`() = runComposeUiTest {
         setContent {
-            var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+            var taskInputState by remember { mutableStateOf(TaskInputState(title = "제목", selectedAuthor = authors.first())) }
             CreateTaskCardModal(
                 taskInputState = taskInputState,
                 onStateChange = { taskInputState = it },
@@ -120,7 +120,7 @@ class CreateTaskCardModalTest {
     @Test
     fun `태그가 5자 이내가 아니라면 태그 규칙 위반 에러가 노출되고 생성 버튼이 활성화되지 않는다`() = runComposeUiTest {
         setContent {
-            var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+            var taskInputState by remember { mutableStateOf(TaskInputState(title = "제목", selectedAuthor = authors.first())) }
             CreateTaskCardModal(
                 taskInputState = taskInputState,
                 onStateChange = { taskInputState = it },
@@ -140,7 +140,7 @@ class CreateTaskCardModalTest {
     @Test
     fun `태그가 5개를 초과하면 태그 규칙 위반 에러가 노출되고 생성 버튼이 활성화되지 않는다`() = runComposeUiTest {
         setContent {
-            var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+            var taskInputState by remember { mutableStateOf(TaskInputState(title = "제목", selectedAuthor = authors.first())) }
             CreateTaskCardModal(
                 taskInputState = taskInputState,
                 onStateChange = { taskInputState = it },
@@ -245,8 +245,6 @@ class CreateTaskCardModalTest {
                 onConfirmation = {},
             )
         }
-        onNodeWithText("생성").performClick() // 초기 화면은 항상 생성 버튼이 활성회되기 때문에 비활성화 처리를 위해 수행
-
         onNodeWithText("생성").assertIsNotEnabled()
         onNodeWithText("태스크 제목을 입력하세요").performTextInput("제목")
         onNodeWithText("태그를 쉼표로 구분하여 입력하세요 (예: 버그, 긴급)").performTextInput("   \n태그의 \t,  앞뒤공백은   , 무시  , 됩니다  ")

@@ -13,6 +13,8 @@ data class TaskInputState(
     val selectedState: TaskState = TaskState.TO_DO,
     val selectedAuthor: String = "",
 ) {
+    val init: Boolean
+        get() = title.isEmpty() && content.isEmpty() && tags.isEmpty()
     val isNewTaskEnabled: Boolean
         get() = titleError == TitleError.NONE && tagError == TagError.NONE
 }
