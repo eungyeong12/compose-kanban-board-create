@@ -21,8 +21,16 @@ class TitleTest {
     }
 
     @Test
-    fun `제목이 비어 있거나 공백만 있는 경우 예외가 발생한다`() {
+    fun `제목이 비어 있는 경우 예외가 발생한다`() {
         assertThatThrownBy { Title("") }
+            .isInstanceOf(TitleException::class.java)
+            .extracting("error")
+            .isEqualTo(TitleError.BLANK)
+    }
+
+    @Test
+    fun `제목이 공백인 경우 예외가 발생한다`() {
+        assertThatThrownBy { Title("\t \n") }
             .isInstanceOf(TitleException::class.java)
             .extracting("error")
             .isEqualTo(TitleError.BLANK)

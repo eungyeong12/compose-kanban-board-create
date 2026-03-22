@@ -29,6 +29,14 @@ class TagTest {
     }
 
     @Test
+    fun `태그 내용이 공백인 경우 예외가 반환된다`() {
+        assertThatThrownBy { Tag("\t \n") }
+            .isInstanceOf(TagException::class.java)
+            .extracting("error")
+            .isEqualTo(TagError.INVALID_FORMAT)
+    }
+
+    @Test
     fun `태그의 길이가 5자를 초과할 경우 예외가 반환된다`() {
         assertThatThrownBy { Tag("123456") }
             .isInstanceOf(TagException::class.java)
