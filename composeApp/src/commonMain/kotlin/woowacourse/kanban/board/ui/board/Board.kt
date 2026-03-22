@@ -12,9 +12,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +33,7 @@ import woowacourse.kanban.board.ui.theme.Primary
 
 @Composable
 fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {
-    val openDialog = remember { mutableStateOf(false) }
+    var openDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -44,7 +46,7 @@ fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, mo
             Column {
                 BoardHeader(
                     tasks = tasks,
-                    onClick = { openDialog.value = true },
+                    onClick = { openDialog = true },
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.White),
@@ -60,15 +62,15 @@ fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, mo
                 )
             }
 
-            if (openDialog.value) {
+            if (openDialog) {
                 CreateTaskModalDialog(
                     authors = authors,
                     onDismissRequest = {
-                        openDialog.value = false
+                        openDialog = false
                     },
                     onConfirmation = {
                         onTaskCreated(it)
-                        openDialog.value = false
+                        openDialog = false
                         scope.launch {
                             snackbarHostState.showSnackbar(
                                 message = "새로운 태스크가 추가되었습니다.",
