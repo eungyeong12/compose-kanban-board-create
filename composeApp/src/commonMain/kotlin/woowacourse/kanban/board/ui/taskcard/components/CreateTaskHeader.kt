@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import woowacourse.kanban.board.ui.theme.titleText
+import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -27,7 +27,7 @@ fun CreateTaskHeader(onDismissRequest: () -> Unit) {
         Text(
             text = "새 태스크 생성",
             fontSize = 20.sp,
-            color = titleText,
+            color = TextPrimary,
             fontWeight = FontWeight.W600,
         )
         IconButton(

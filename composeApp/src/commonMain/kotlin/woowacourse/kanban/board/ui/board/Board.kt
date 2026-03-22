@@ -26,8 +26,8 @@ import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.components.BoardHeader
 import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
 import woowacourse.kanban.board.ui.board.components.KanbanBoardContent
-import woowacourse.kanban.board.ui.theme.boardBackground
-import woowacourse.kanban.board.ui.theme.border
+import woowacourse.kanban.board.ui.theme.Primary
+import woowacourse.kanban.board.ui.theme.OutlineVariant
 
 @Composable
 fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {
@@ -50,13 +50,13 @@ fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, mo
                         .background(Color.White),
                 )
 
-                HorizontalDivider(color = border)
+                HorizontalDivider(color = OutlineVariant)
 
                 KanbanBoardContent(
                     tasks,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(boardBackground),
+                        .background(Primary),
                 )
             }
 

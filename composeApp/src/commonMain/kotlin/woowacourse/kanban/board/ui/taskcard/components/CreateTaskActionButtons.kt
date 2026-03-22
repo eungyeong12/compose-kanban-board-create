@@ -14,12 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.ui.theme.cancelButtonContainer
-import woowacourse.kanban.board.ui.theme.cancelButtonContent
-import woowacourse.kanban.board.ui.theme.createButtonContainer
-import woowacourse.kanban.board.ui.theme.createButtonContent
-import woowacourse.kanban.board.ui.theme.createButtonDisableContent
-import woowacourse.kanban.board.ui.theme.createButtonDisabledContainer
+import woowacourse.kanban.board.ui.theme.PrimaryContainer
+import woowacourse.kanban.board.ui.theme.TextSecondary
+import woowacourse.kanban.board.ui.theme.OnSurface
+import woowacourse.kanban.board.ui.theme.OnSurfaceVariant
+import woowacourse.kanban.board.ui.theme.DisabledContainer
 
 @Composable
 fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onDismissRequest: () -> Unit, onCreateClick: () -> Unit) {
@@ -31,8 +30,8 @@ fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onDismissRequest: () -> U
         Button(
             onClick = { onDismissRequest() },
             colors = ButtonDefaults.buttonColors(
-                containerColor = cancelButtonContainer,
-                contentColor = cancelButtonContent,
+                containerColor = PrimaryContainer,
+                contentColor = TextSecondary,
             ),
         ) {
             Text(text = "취소", textAlign = TextAlign.Center)
@@ -43,10 +42,10 @@ fun CreateTaskActionButtons(isNewTaskEnabled: Boolean, onDismissRequest: () -> U
             enabled = isNewTaskEnabled,
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = createButtonContainer,
-                contentColor = createButtonContent,
-                disabledContainerColor = createButtonDisabledContainer,
-                disabledContentColor = createButtonDisableContent,
+                containerColor = OnSurface,
+                contentColor = OnSurfaceVariant,
+                disabledContainerColor = DisabledContainer,
+                disabledContentColor = OnSurfaceVariant,
             ),
         ) {
             Text(text = "생성", textAlign = TextAlign.Center)

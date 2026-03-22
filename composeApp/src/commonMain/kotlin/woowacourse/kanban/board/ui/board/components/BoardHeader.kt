@@ -27,11 +27,10 @@ import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
-import woowacourse.kanban.board.ui.theme.completedRate
-import woowacourse.kanban.board.ui.theme.createTaskButton
-import woowacourse.kanban.board.ui.theme.progressBar
-import woowacourse.kanban.board.ui.theme.progressBarTrack
-import woowacourse.kanban.board.ui.theme.titleText
+import woowacourse.kanban.board.ui.theme.CompletedRate
+import woowacourse.kanban.board.ui.theme.OnSurface
+import woowacourse.kanban.board.ui.theme.OutlineVariant
+import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @Composable
 fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier) {
@@ -65,7 +64,7 @@ private fun BoardTitle(modifier: Modifier = Modifier) {
         modifier = modifier,
         fontWeight = FontWeight.W500,
         fontSize = 24.sp,
-        color = titleText,
+        color = TextPrimary,
     )
 }
 
@@ -76,7 +75,7 @@ private fun TaskCompletedRate(tasks: Tasks, modifier: Modifier = Modifier) {
         text = "완료율: ${tasks.completedRate()}% (${tasks.countByState(TaskState.DONE)}/${tasks.tasks.size})",
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
-        color = completedRate,
+        color = CompletedRate,
     )
 }
 
@@ -86,7 +85,7 @@ private fun CreateTaskButton(onClick: () -> Unit, modifier: Modifier = Modifier)
         onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
-            containerColor = createTaskButton,
+            containerColor = OnSurface,
             contentColor = Color.White,
         ),
         shape = RoundedCornerShape(8.dp),
@@ -114,8 +113,8 @@ private fun ProjectProgress(doneCount: Int, totalCount: Int, modifier: Modifier 
         modifier = modifier
             .fillMaxWidth()
             .height(8.dp),
-        color = progressBar,
-        trackColor = progressBarTrack,
+        color = OnSurface,
+        trackColor = OutlineVariant,
     )
 }
 
