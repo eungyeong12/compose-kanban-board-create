@@ -48,7 +48,7 @@ fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier
                 TaskCompletedRate(
                     tasks.completedRate(),
                     tasks.countByState(TaskState.DONE),
-                    tasks.tasks.size,
+                    tasks.totalCount,
                 )
             }
             CreateTaskButton(onClick = onClick)
@@ -56,7 +56,7 @@ fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier
         Spacer(modifier = Modifier.height(16.dp))
         ProjectProgress(
             doneCount = tasks.countByState(TaskState.DONE),
-            totalCount = tasks.tasks.size,
+            totalCount = tasks.totalCount,
         )
     }
 }
