@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -74,7 +75,7 @@ private fun StateTasks(
 private fun StateTasksTitle(titleColor: Color, taskState: TaskState, tasks: Tasks, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .width(320.dp)
+            .fillMaxWidth()
             .background(titleColor)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
