@@ -1,6 +1,5 @@
 package woowacourse.kanban.board.ui.taskcard.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.ui.theme.TextPrimary
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CreateTaskHeader(onDismissRequest: () -> Unit) {
     Row(
